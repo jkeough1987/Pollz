@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>{{#user}}
+{{name}}
+<form action="edit-profile" method="post">
+    <input type="text" placeholder="Enter your name" name="userName"/>
+    <input type="text" placeholder="Enter your old password" name="old1"/>
+    <input type="text" placeholder="Reenter your old password" name="old2"/>
+    <input type="text" placeholder="Enter your new password" name="newpassword"/>
+
+</form>
+<form action="/take-poll" method="get">
+    <button type="submit">Take A Poll</button>
+</form>
+
+<form action="/get-polls" method="get">
+    <button type="submit">See Your Polls</button>
+</form>
+
+<form action="/create-poll" method="get">
+    <button type="submit">Create A Poll</button>
+</form>
+{{/user}}
+</body>
+</html>
