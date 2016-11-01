@@ -17,7 +17,7 @@ public class Result {
     @Column(nullable = false)
     private Integer pollId;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String answer;
 
     public Result() {
