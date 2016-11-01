@@ -13,10 +13,10 @@ public class Result {
     private String topic;
 
     @Column(nullable = false)
-    private String userId;
+    private Integer userId;
 
     @Column(nullable = false)
-    private int pullId;
+    private Integer pollId;
 
     @Column(nullable = false)
     private String answer;
@@ -24,10 +24,10 @@ public class Result {
     public Result() {
     }
 
-    public Result(String topic, String userId, int pullId, String answer) {
+    public Result(String topic, Integer userId, int pullId, String answer) {
         this.topic = topic;
         this.userId = userId;
-        this.pullId = pullId;
+        this.pollId = pullId;
         this.answer = answer;
     }
 
@@ -47,20 +47,20 @@ public class Result {
         this.topic = topic;
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
     public int getPullId() {
-        return pullId;
+        return pollId;
     }
 
     public void setPullId(int pullId) {
-        this.pullId = pullId;
+        this.pollId = pullId;
     }
 
     public String getAnswer() {

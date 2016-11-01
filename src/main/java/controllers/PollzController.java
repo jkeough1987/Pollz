@@ -26,12 +26,12 @@ public class PollzController {
     @Autowired
     ResultRepo results;
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/home", method = RequestMethod.GET)
     public String home(HttpSession session, Model model) {
         String username = (String)session.getAttribute("username");
         User user = users.findFirstByName(username);
         model.addAttribute("user", user);
-        return "";
+        return "home";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -85,13 +85,29 @@ public class PollzController {
     }
 
     @RequestMapping(path = "/create-poll", method = RequestMethod.GET)
-    public String createPoll(HttpSession session)throws Exception{
+    public String getcreatePoll(HttpSession session)throws Exception{
+        return("/createpoll");
+    }
+
+    @RequestMapping(path = "/create-poll", method = RequestMethod.POST)
+    public String createPoll(HttpSession session, String pollName, String topic, String responseA,String responseB,String responseC,String responseD,String responseE,String responseF )throws Exception{
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        Poll poll = new Poll(pollName,topic,responseA,responseB,responseC,responseD,responseE,responseF,user);
+        polls.save(poll);
         return("/createpoll");
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
     public String profile(HttpSession session)throws Exception{
-        return("/profile");
+        return"/profile";
+    }
+
+    @RequestMapping(path ="/submit-answer", method = RequestMethod.POST)
+    public String results(String topic, Integer userid, Integer pollid, String answer) {
+        Result result = new Result(topic,userid,pollid,answer);
+        results.save(result);
+        return"/take-poll";
     }
 
 }

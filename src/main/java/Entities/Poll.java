@@ -17,22 +17,22 @@ public class Poll {
     private String pollTopic;
 
     @Column(nullable = false)
-    private int responseA;
+    private String responseA;
 
     @Column(nullable = false)
-    private int responseB;
+    private String responseB;
 
     @Column(nullable = true)
-    private Integer responseC;
+    private String responseC;
 
     @Column(nullable = true)
-    private Integer responseD;
+    private String responseD;
 
     @Column(nullable = true)
-    private Integer responseE;
+    private String responseE;
 
     @Column(nullable = true)
-    private Integer responseF;
+    private String responseF;
 
     @ManyToOne
     private User user;
@@ -40,45 +40,7 @@ public class Poll {
     public Poll() {
     }
 
-    public Poll(String pollName, String pollTopic, int responseA, int responseB, User user) {
-        this.pollName = pollName;
-        this.pollTopic = pollTopic;
-        this.responseA = responseA;
-        this.responseB = responseB;
-        this.user = user;
-    }
-
-    public Poll(String pollName, String pollTopic, int responseA, int responseB, Integer responseC, User user) {
-        this.pollName = pollName;
-        this.pollTopic = pollTopic;
-        this.responseA = responseA;
-        this.responseB = responseB;
-        this.responseC = responseC;
-        this.user = user;
-    }
-
-    public Poll(String pollName, String pollTopic, int responseA, int responseB, Integer responseC, Integer responseD, User user) {
-        this.pollName = pollName;
-        this.pollTopic = pollTopic;
-        this.responseA = responseA;
-        this.responseB = responseB;
-        this.responseC = responseC;
-        this.responseD = responseD;
-        this.user = user;
-    }
-
-    public Poll(String pollName, String pollTopic, int responseA, int responseB, Integer responseC, Integer responseD, Integer responseE, User user) {
-        this.pollName = pollName;
-        this.pollTopic = pollTopic;
-        this.responseA = responseA;
-        this.responseB = responseB;
-        this.responseC = responseC;
-        this.responseD = responseD;
-        this.responseE = responseE;
-        this.user = user;
-    }
-
-    public Poll(String pollName, String pollTopic, int responseA, int responseB, Integer responseC, Integer responseD, Integer responseE, Integer responseF, User user) {
+    public Poll(String pollName, String pollTopic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF, User user) {
         this.pollName = pollName;
         this.pollTopic = pollTopic;
         this.responseA = responseA;
@@ -114,51 +76,51 @@ public class Poll {
         this.pollTopic = pollTopic;
     }
 
-    public int getResponseA() {
+    public String getResponseA() {
         return responseA;
     }
 
-    public void setResponseA(int responseA) {
+    public void setResponseA(String responseA) {
         this.responseA = responseA;
     }
 
-    public int getResponseB() {
+    public String getResponseB() {
         return responseB;
     }
 
-    public void setResponseB(int responseB) {
+    public void setResponseB(String responseB) {
         this.responseB = responseB;
     }
 
-    public Integer getResponseC() {
+    public String getResponseC() {
         return responseC;
     }
 
-    public void setResponseC(Integer responseC) {
+    public void setResponseC(String responseC) {
         this.responseC = responseC;
     }
 
-    public Integer getResponseD() {
+    public String getResponseD() {
         return responseD;
     }
 
-    public void setResponseD(Integer responseD) {
+    public void setResponseD(String responseD) {
         this.responseD = responseD;
     }
 
-    public Integer getResponseE() {
+    public String getResponseE() {
         return responseE;
     }
 
-    public void setResponseE(Integer responseE) {
+    public void setResponseE(String responseE) {
         this.responseE = responseE;
     }
 
-    public Integer getResponseF() {
+    public String getResponseF() {
         return responseF;
     }
 
-    public void setResponseF(Integer responseF) {
+    public void setResponseF(String responseF) {
         this.responseF = responseF;
     }
 
