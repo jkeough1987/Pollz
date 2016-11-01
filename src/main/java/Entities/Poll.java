@@ -8,34 +8,34 @@ public class Poll {
 
     @Id
     @GeneratedValue
-    int id;
+    private int id;
 
     @Column(nullable = false)
-    String pollName;
+    private String pollName;
 
     @Column(nullable = false)
-    String pollTopic;
+    private String pollTopic;
 
     @Column(nullable = false)
-    int responseA;
+    private int responseA;
 
     @Column(nullable = false)
-    int responseB;
+    private int responseB;
 
     @Column(nullable = true)
-    Integer responseC;
+    private Integer responseC;
 
     @Column(nullable = true)
-    Integer responseD;
+    private Integer responseD;
 
     @Column(nullable = true)
-    Integer responseE;
+    private Integer responseE;
 
     @Column(nullable = true)
-    Integer responseF;
+    private Integer responseF;
 
     @ManyToOne
-    User user;
+    private User user;
 
     public Poll() {
     }
