@@ -5,11 +5,14 @@ import Services.*;
 import Utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Random;
 
 @Controller
 public class PollzController {
@@ -50,7 +53,11 @@ public class PollzController {
     }
 
     @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
-    public String takePoll(HttpServletResponse response)throws Exception{
+    public String takePoll(HttpServletResponse response, Model model)throws Exception{
+        Random random = new Random(System.currentTimeMillis());
+        ArrayList<Poll> pollList = (ArrayList)polls.findAll();
+        Poll poll = pollList.get(random.nextInt(pollList.size()-1));
+        model.addAttribute("poll", poll);
         return("/takepoll");
     }
 

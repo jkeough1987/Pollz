@@ -5,6 +5,10 @@
     <title>Take A Poll</title>
 </head>
 <body>
+{{#poll}}
+{{id}}
+
+{{/poll}}
 <form action="/take-poll" method="get">
     <button type="submit">Take A New Poll</button>
 </form>
