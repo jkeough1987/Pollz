@@ -5,12 +5,24 @@
     <title>Take A Poll</title>
 </head>
 <body>
+
+<!--
+
+each response is a selectable option
+user can only select one option
+when user selects an option, answer is not submitted automatically
+user needs to hit submit to submit answer
+
+-->
+
 {{#poll}}
 {{id}}
-
+{{topic}}
+{{.}}
 {{/poll}}
+
 <form action="/take-poll" method="get">
-    <button type="submit">Take A New Poll</button>
+    <button type="submit">Take Another Poll</button>
 </form>
 
 <form action="/create-poll" method="get">

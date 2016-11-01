@@ -5,6 +5,15 @@
     <title>UserPolls</title>
 </head>
 <body>
+
+<!-- need to get the polls associated with the user here  -->
+<!-- like purchases -->
+<!-- use poll id to generate stats for that individual poll -->
+{{#poll}}
+    {{id}}
+    <a href="poll/?{{id}}">{{name}}</a>
+{{/poll}}
+
 <form action="/take-poll" method="get">
     <button type="submit">Take A Poll</button>
 </form>
