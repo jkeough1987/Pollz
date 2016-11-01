@@ -26,24 +26,40 @@ public class PollzController {
     @Autowired
     ResultRepo results;
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String home(HttpSession session, Model model) {
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        model.addAttribute("user", user);
+        return "";
+    }
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpSession session, HttpServletResponse response, String userName, String password) throws Exception {
+    public String login(HttpSession session, String userName, String password, Model model) throws Exception {
         User user = users.findFirstByName(userName);
         if (user == null) {
-            user = new User(userName, PasswordStorage.createHash(password));
-            users.save(user);
+            return "redirect:/register";
         } else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
-            throw new Exception("Wrong password");
+            return "redirect:/";
         }
-        session.setAttribute("username", userName);
-        response.sendRedirect("/Home");
-        return user;
+//        session.setAttribute("username", userName);
+        model.addAttribute("user", user);
+
+        return "redirect:/";
     }
 
     //TODO: Maybe this could be a direct link from the HTML page? <a href = "register.html">, something like that
     @RequestMapping(path = "/register", method = RequestMethod.GET)
-    public String register( String username, String password)throws Exception{
+    public String goToRegister()throws Exception{
         return("/register");
+    }
+
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    public String registerUser(HttpSession session, String name, String password, String country, String city, String zip)throws Exception{
+        User user = new User(name,password,country,city,zip);
+        session.setAttribute("username", name);
+        users.save(user);
+        return("/home");
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
@@ -53,7 +69,7 @@ public class PollzController {
     }
 
     @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
-    public String takePoll(HttpServletResponse response, Model model)throws Exception{
+    public String takePoll(HttpSession session, Model model)throws Exception{
         Random random = new Random(System.currentTimeMillis());
         ArrayList<Poll> pollList = (ArrayList)polls.findAll();
         Poll poll = pollList.get(random.nextInt(pollList.size()-1));
@@ -62,18 +78,20 @@ public class PollzController {
     }
 
     @RequestMapping(path = "/get-polls", method = RequestMethod.GET)
-    public String getPolls(HttpServletResponse response)throws Exception{
+    public String getPolls(HttpSession session, User user, Model model)throws Exception{
+        ArrayList<Poll> userPolls = polls.findByUser(user);
+        model.addAttribute("polls", userPolls);
         return("userpolls");
     }
 
-    @RequestMapping(path = "/create-polls", method = RequestMethod.GET)
-    public String createPoll()throws Exception{
+    @RequestMapping(path = "/create-poll", method = RequestMethod.GET)
+    public String createPoll(HttpSession session)throws Exception{
         return("/createpoll");
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
-    public String profile(HttpServletResponse response)throws Exception{
-        return("/createpoll");
+    public String profile(HttpSession session)throws Exception{
+        return("/profile");
     }
 
 }
