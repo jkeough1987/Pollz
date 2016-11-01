@@ -1,15 +1,18 @@
-package Controllers;
-
-import Entities.*;
-import Services.*;
-import Utilities.*;
+package com.theironyard.Controllers;
+import com.theironyard.Entities.Poll;
+import com.theironyard.Entities.Result;
+import com.theironyard.Services.ResultRepo;
+import com.theironyard.Services.PollRepo;
+import com.theironyard.Entities.User;
+import com.theironyard.Services.UserRepo;
+import com.theironyard.Utilities.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,7 +29,7 @@ public class PollzController {
     @Autowired
     ResultRepo results;
 
-    @RequestMapping(path = "/home", method = RequestMethod.GET)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(HttpSession session, Model model) {
         String username = (String)session.getAttribute("username");
         User user = users.findFirstByName(username);
@@ -54,10 +57,10 @@ public class PollzController {
         return("/register");
     }
 
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public String registerUser(HttpSession session, String name, String password, String country, String city, String zip)throws Exception{
-        User user = new User(name,password,country,city,zip);
-        session.setAttribute("username", name);
+    @RequestMapping(path = "/create-profile", method = RequestMethod.POST)
+    public String registerUser(HttpSession session, String userName, String newpassword, String country, String city, String zip)throws Exception{
+        User user = new User(userName,PasswordStorage.createHash(newpassword),country,city,zip);
+        session.setAttribute("username", userName);
         users.save(user);
         return("/home");
     }
@@ -72,7 +75,7 @@ public class PollzController {
     public String takePoll(HttpSession session, Model model)throws Exception{
         Random random = new Random(System.currentTimeMillis());
         ArrayList<Poll> pollList = (ArrayList)polls.findAll();
-        Poll poll = pollList.get(random.nextInt(pollList.size()-1));
+        Poll poll = pollList.get(random.nextInt(pollList.size()));
         model.addAttribute("poll", poll);
         return("/takepoll");
     }

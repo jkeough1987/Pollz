@@ -1,5 +1,4 @@
-package Entities;
-
+package com.theironyard.Entities;
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +17,7 @@ public class Result {
     @Column(nullable = false)
     private Integer pollId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String answer;
 
     public Result() {
