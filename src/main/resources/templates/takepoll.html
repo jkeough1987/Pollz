@@ -18,20 +18,20 @@ user needs to hit submit to submit answer
 {{#poll}}
 {{id}}
 {{topic}}
-{{.}}
 <form action="/submit-answer" method="post">
-    <input type="hidden" value="{{user.id}}" name="userid"/>
-    <input type="hidden" value="{{topic}}" name="topic"/>
-    <input type="hidden" value="{{id}}" name="pollid"/>
+    <input type="text" placeholder="Answer" name="answer"/>
+    <input type="hidden" value="{{topic}}" name="topic">
+    <input type="hidden" value="{{user.id}}" name="userId">
     <select name="Answer">
         <option selected disabled>Answer</option>
-        {{#responseA}} <option value="{{responseA}}">{{responseA}}</option>{{/responseA}}
-        {{#responseB}} <option value="{{responseB}}">{{responseB}}</option>{{/responseB}}
-        {{#responseC}} <option value="{{responseC}}">{{responseC}}</option>{{/responseC}}
-        {{#responseD}} <option value="{{responseD}}">{{responseD}}</option>{{/responseD}}
-        {{#responseE}} <option value="{{responseE}}">{{responseE}}</option>{{/responseF}}
-        {{#responseF}} <option value="{{responseF}}">{{responseF}}</option>{{/responseF}}
+        {{#responseA}}<option value="{{responseA}}">{{responseA}}</option>{{/responseA}}
+        {{#responseB}}<option value="{{responseB}}">{{responseB}}</option>{{/responseB}}
+        {{#responseC}}<option value="{{responseC}}">{{responseC}}</option>{{/responseC}}
+        {{#responseD}}<option value="{{responseD}}">{{responseD}}</option>{{/responseD}}
+        {{#responseE}}<option value="{{responseE}}">{{responseE}}</option>{{/responseE}}
+        {{#responseF}}<option value="{{responseF}}">{{responseF}}</option>{{/responseF}}
     </select>
+    <button type="submit">Submit Poll</button>
 </form>
 {{/poll}}
 
@@ -42,5 +42,3 @@ user needs to hit submit to submit answer
 <form action="/create-poll" method="get">
     <button type="submit">Create A Poll</button>
 </form>
-</body>
-</html>
