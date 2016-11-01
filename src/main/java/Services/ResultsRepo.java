@@ -1,7 +1,8 @@
 package Services;
 
-/**
- * Created by joshuakeough on 10/31/16.
- */
-public interface ResultsRepo {
+
+import Entities.Results;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ResultsRepo extends CrudRepository<Results, Integer> {
 }
