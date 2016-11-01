@@ -1,4 +1,4 @@
-package controllers;
+package Controllers;
 
 import Entities.*;
 import Services.*;
@@ -21,7 +21,7 @@ public class PollzController {
     PollRepo polls;
 
     @Autowired
-    ResultsRepo results;
+    ResultRepo results;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public User login(HttpSession session, HttpServletResponse response, String userName, String password) throws Exception {
