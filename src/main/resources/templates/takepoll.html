@@ -18,6 +18,7 @@ user needs to hit submit to submit answer
 {{#poll}}
 {{id}}
 {{topic}}
+{{.}}
 <form action="/submit-answer" method="post">
     <input type="hidden" value="{{user.id}}" name="userid"/>
     <input type="hidden" value="{{topic}}" name="topic"/>
