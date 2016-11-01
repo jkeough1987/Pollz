@@ -45,7 +45,7 @@ public class PollzController {
         } else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
             return "redirect:/";
         }
-//        session.setAttribute("username", userName);
+        session.setAttribute("username", userName);
         model.addAttribute("user", user);
 
         return "redirect:/";
@@ -60,7 +60,6 @@ public class PollzController {
     @RequestMapping(path = "/create-profile", method = RequestMethod.POST)
     public String registerUser(HttpSession session, String userName, String newpassword, String country, String city, String zip)throws Exception{
         User user = new User(userName,PasswordStorage.createHash(newpassword),country,city,zip);
-        session.setAttribute("username", userName);
         users.save(user);
         return("/home");
     }
@@ -96,6 +95,18 @@ public class PollzController {
     public String createPoll(HttpSession session, String pollName, String topic, String responseA,String responseB,String responseC,String responseD,String responseE,String responseF )throws Exception{
         String username = (String)session.getAttribute("username");
         User user = users.findFirstByName(username);
+        if(responseC.equals("")) {
+            responseC = null;
+        }
+        if(responseD.equals("")) {
+            responseD = null;
+        }
+        if(responseE.equals("")) {
+            responseE = null;
+        }
+        if(responseF.equals("")) {
+            responseF = null;
+        }
         Poll poll = new Poll(pollName,topic,responseA,responseB,responseC,responseD,responseE,responseF,user);
         polls.save(poll);
         return("/createpoll");
