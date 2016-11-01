@@ -40,33 +40,33 @@ public class PollzController {
     //TODO: Maybe this could be a direct link from the HTML page? <a href = "register.html">, something like that
     @RequestMapping(path = "/register", method = RequestMethod.GET)
     public String register( String username, String password)throws Exception{
-        return("/Register");
+        return("/register");
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession session) throws Exception {
         session.invalidate();
-        return("/Home");
+        return("/home");
     }
 
     @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
     public String takePoll(HttpServletResponse response)throws Exception{
-        return("/TakePoll");
+        return("/takepoll");
     }
 
     @RequestMapping(path = "/get-polls", method = RequestMethod.GET)
     public String getPolls(HttpServletResponse response)throws Exception{
-        return("/Poll");
+        return("userpolls");
     }
 
     @RequestMapping(path = "/create-polls", method = RequestMethod.GET)
     public String createPoll()throws Exception{
-        return("/CreatePoll");
+        return("/createpoll");
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
     public String profile(HttpServletResponse response)throws Exception{
-        return("/CreatePoll");
+        return("/createpoll");
     }
 
 }
