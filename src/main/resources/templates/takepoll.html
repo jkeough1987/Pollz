@@ -17,10 +17,10 @@ user needs to hit submit to submit answer
 
 {{#poll}}
 {{id}}
-{{topic}}
+{{pollTopic}}
 <form action="/submit-answer" method="post">
     <input type="text" placeholder="Answer" name="answer"/>
-    <input type="hidden" value="{{topic}}" name="topic">
+    <input type="hidden" value="{{pollTopic}}" name="topic">
     <input type="hidden" value="{{user.id}}" name="userId">
     <select name="Answer">
         <option selected disabled>Answer</option>

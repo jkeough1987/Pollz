@@ -1,8 +1,8 @@
-package Services;
+package com.theironyard.Services;
 
-import Entities.Poll;
+import com.theironyard.Entities.Poll;
 
-import Entities.User;
+import com.theironyard.Entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.ArrayList;

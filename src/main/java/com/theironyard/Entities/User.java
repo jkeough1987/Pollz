@@ -1,5 +1,4 @@
-package Entities;
-
+package com.theironyard.Entities;
 import javax.persistence.*;
 
 @Entity
