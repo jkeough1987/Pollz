@@ -7,6 +7,7 @@
 <body>
 {{#user}}
 {{name}}
+
 <form action="edit-profile" method="post">
     <input type="text" placeholder="Enter your name" name="userName"/>
     <input type="text" placeholder="Enter your old password" name="old1"/>
@@ -25,6 +26,7 @@
 <form action="/create-poll" method="get">
     <button type="submit">Create A Poll</button>
 </form>
+
 {{/user}}
 </body>
 </html>
