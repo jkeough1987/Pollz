@@ -10,19 +10,19 @@ public class User {
     int id;
 
     @Column(nullable = false)
-    String name;
+     private String name;
 
     @Column(nullable = false)
-    String password;
+    private String password;
 
     @Column(nullable = true)
-    String country;
+    private String country;
 
     @Column(nullable = true)
-    String city;
+    private String city;
 
     @Column(nullable = true)
-    String zip;
+    private String zip;
 
     public User() {
     }
