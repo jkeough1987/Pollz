@@ -24,17 +24,49 @@ public class PollzController {
     ResultsRepo results;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpSession session, HttpServletResponse response, String username, String password) throws Exception {
-        User user = users.findFirstByName(username);
+    public User login(HttpSession session, HttpServletResponse response, String userName, String password) throws Exception {
+        User user = users.findFirstByName(userName);
         if (user == null) {
-            user = new User(username, PasswordStorage.createHash(password));
+            user = new User(userName, PasswordStorage.createHash(password));
             users.save(user);
         } else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
             throw new Exception("Wrong password");
         }
-        session.setAttribute("username", username);
-        response.sendRedirect("/");
+        session.setAttribute("username", userName);
+        response.sendRedirect("/Home");
         return user;
     }
-    
+
+    //TODO: Maybe this could be a direct link from the HTML page? <a href = "register.html">, something like that
+    @RequestMapping(path = "/register", method = RequestMethod.GET)
+    public String register( String username, String password)throws Exception{
+        return("/register");
+    }
+
+    @RequestMapping(path = "/logout", method = RequestMethod.POST)
+    public String logout(HttpSession session) throws Exception {
+        session.invalidate();
+        return("/home");
+    }
+
+    @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
+    public String takePoll(HttpServletResponse response)throws Exception{
+        return("/takepoll");
+    }
+
+    @RequestMapping(path = "/get-polls", method = RequestMethod.GET)
+    public String getPolls(HttpServletResponse response)throws Exception{
+        return("userpolls");
+    }
+
+    @RequestMapping(path = "/create-polls", method = RequestMethod.GET)
+    public String createPoll()throws Exception{
+        return("/createpoll");
+    }
+
+    @RequestMapping(path = "/profile", method = RequestMethod.GET)
+    public String profile(HttpServletResponse response)throws Exception{
+        return("/createpoll");
+    }
+
 }
