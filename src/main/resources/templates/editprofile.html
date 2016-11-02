@@ -9,12 +9,14 @@
 
 <h3>Pollz</h3>
 
+Current profile information:
 {{#user}}
 Country: {{country}}
 City: {{city}}
 Zip: {{zip}}
 {{/user}}
 
+Edit your profile:
 <form action="/edit-profile" method="post" id="editProfile">
     <input type="text" placeholder="Enter your country" name="country" id="fields"/>
     <input type="text" placeholder="Enter your city" name="city" id="fields"/>
@@ -38,5 +40,6 @@ Zip: {{zip}}
     <button type="submit">Home</button>
 </form>
 {{/show}}
+
 </body>
 </html>
