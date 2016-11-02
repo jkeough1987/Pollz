@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
+    <title>Edit Profile</title>
+</head>
+<body>
+
+<h3>Pollz</h3>
+
+{{#user}}
+Country: {{country}}
+City: {{city}}
+Zip: {{zip}}
+{{/user}}
+
+<form action="/edit-profile" method="post" id="editProfile">
+    <input type="text" placeholder="Enter your country" name="country" id="fields"/>
+    <input type="text" placeholder="Enter your city" name="city" id="fields"/>
+    <input type="text" placeholder="enter your zip" name="zip" id="fields"/>
+    <button type="submit" id="button">Update profile information</button>
+</form>
+
+<form action="/show" method="post">
+    <button type="submit" id="button">Edit password</button>
+</form>
+
+{{#show}}
+<form action="/edit-password" method="post">
+    <input type="text" placeholder="current password" name="currentPassword"/>
+    <input type="text" placeholder="please enter your new password" name="newPassword1"/>
+    <input type="text" placeholder="Enter your new password once again" name="newPassword2">
+    <button type="submit" id="button">Update password</button>
+</form>
+
+<form action="/" method="get" id="home">
+    <button type="submit">Home</button>
+</form>
+{{/show}}
+</body>
+</html>
