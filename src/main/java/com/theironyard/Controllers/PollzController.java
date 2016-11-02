@@ -134,4 +134,28 @@ public class PollzController {
         return"takepoll";
     }
 
+    @RequestMapping(path = "/edit-profile", method = RequestMethod.POST)
+    public String editUser(HttpSession session, String userName, String newpassword, String country, String city, String zip,Integer userId)throws Exception{
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        user.setName(userName);
+        user.setPassword(newpassword);
+        user.setCountry(country);
+        user.setCity(city);
+        user.setZip(zip);
+        users.save(user);
+        return("/home");
+    }
+
+    @RequestMapping(path = "/edit-profile", method = RequestMethod.GET)
+    public String getEditUser(HttpSession session, Model model)throws Exception{
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        model.addAttribute("user", user);
+        users.save(user);
+        return("/editprofile");
+    }
+
+
+
 }
