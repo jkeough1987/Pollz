@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<!--
+
+username and password need to be hardcoded (initially at least)
+
+logout
+view users
+view polls
+
+update users
+update polls
+
+remove users
+remove polls
+
+-->
+
+<form action="/logout" method="post">
+    <button type="submit">LogOut</button>
+</form>
+
+Registered users:
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>password</th>
+        <th>country</th>
+        <th>city</th>
+        <th>zip</th>
+    </tr>
+    {{#user}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{password}}</td>
+        <td>{{country}}</td>
+        <td>{{city}}</td>
+        <td>{{zip}}</td>
+    </tr>
+    {{/user}}
+</table>
+
+
+Find user by username:
+
+Update user information:
+
+Remove user:
+
+View all polls:
+
+Find poll by username:
+
+Find poll by poll name
+
+Remove poll:
+
+</body>
+</html>
