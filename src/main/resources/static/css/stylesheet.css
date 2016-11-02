@@ -1,0 +1,45 @@
+#body{
+
+}
+
+#title{
+
+    border: solid thick black;
+
+    width:50%;
+    text-align: center;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:200%;
+}
+
+#register{
+    border: solid thick black;
+
+    width:50%;
+    height: 6.8em;
+    text-align: center;
+    vertical-align:middle;
+    margin-top: 15%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:200%;
+}
+
+#fields{
+    text-align: center;
+    vertical-align:middle;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 100%;
+}
+
+#button{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#home{
+    float: right;
+}

@@ -34,7 +34,7 @@ public class PollzController {
         String username = (String)session.getAttribute("username");
         User user = users.findFirstByName(username);
         model.addAttribute("user", user);
-        return "home";
+        return "/home";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -51,7 +51,6 @@ public class PollzController {
         return "redirect:/";
     }
 
-    //TODO: Maybe this could be a direct link from the HTML page? <a href = "register.html">, something like that
     @RequestMapping(path = "/register", method = RequestMethod.GET)
     public String goToRegister()throws Exception{
         return("/register");
@@ -72,8 +71,13 @@ public class PollzController {
 
     @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
     public String takePoll(HttpSession session, Model model)throws Exception{
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random();//(System.currentTimeMillis());
         ArrayList<Poll> pollList = (ArrayList)polls.findAll();
+
+        if(pollList.size()==0){
+            return("redirect:/");
+        }
+
         Poll poll = pollList.get(random.nextInt(pollList.size()));
         model.addAttribute("poll", poll);
         return("/takepoll");
@@ -82,8 +86,13 @@ public class PollzController {
     @RequestMapping(path = "/get-polls", method = RequestMethod.GET)
     public String getPolls(HttpSession session, User user, Model model)throws Exception{
         ArrayList<Poll> userPolls = polls.findByUser(user);
+
+        if (userPolls.size() == 0){
+            return("redirect:/");
+        }
+
         model.addAttribute("polls", userPolls);
-        return("userpolls");
+        return("/userpolls");
     }
 
     @RequestMapping(path = "/create-poll", method = RequestMethod.GET)
@@ -117,11 +126,12 @@ public class PollzController {
         return"/profile";
     }
 
-    @RequestMapping(path ="/submit-answer", method = RequestMethod.POST)
+    //error here with not returning to poll page
+    @RequestMapping(path ="/submit-answer", method = RequestMethod.GET)
     public String results(String topic, Integer userid, Integer pollid, String answer) {
         Result result = new Result(topic,userid,pollid,answer);
         results.save(result);
-        return"/take-poll";
+        return"takepoll";
     }
 
 }

@@ -15,17 +15,18 @@ user needs to hit submit to submit answer
 
 -->
 
-{{#poll}}
-{{id}}
+{{#poll}}q
 {{pollTopic}}
-<form action="/submit-answer" method="post">
-    <input type="text" placeholder="Answer" name="answer"/>
-    <input type="hidden" value="{{pollTopic}}" name="topic">
-    <input type="hidden" value="{{user.id}}" name="userId">
-    <select name="Answer">
+<form action="/submit-answer" method="get">
+    <!-- <input type="text" placeholder="Answer" name="answer"/> -->
+    <input type="hidden" value="{{pollTopic}}" name="topic"/>
+    <input type="hidden" value="{{user.id}}" name="userid"/>
+    <input type="hidden" value="{{id}}" name="pollid"/>
+    <select name="answer">
         <option selected disabled>Answer</option>
-        {{#responseA}}<option value="{{responseA}}">{{responseA}}</option>{{/responseA}}
-        {{#responseB}}<option value="{{responseB}}">{{responseB}}</option>{{/responseB}}
+        <!-- problem with answer coming back null. Maybe the mustache tags aren't passing values?-->
+        {{#responseA}}<option value="{{.}}">{{responseA}}</option>{{/responseA}}
+        {{#responseB}}<option value="{{.}}">{{responseB}}</option>{{/responseB}}
         {{#responseC}}<option value="{{responseC}}">{{responseC}}</option>{{/responseC}}
         {{#responseD}}<option value="{{responseD}}">{{responseD}}</option>{{/responseD}}
         {{#responseE}}<option value="{{responseE}}">{{responseE}}</option>{{/responseE}}
@@ -42,3 +43,10 @@ user needs to hit submit to submit answer
 <form action="/create-poll" method="get">
     <button type="submit">Create A Poll</button>
 </form>
+
+<form action="/" method="get">
+    <button type="submit">Home</button>
+</form>
+
+</body>
+</html>
