@@ -9,10 +9,18 @@
 <!-- need to get the polls associated with the user here  -->
 <!-- like purchases -->
 <!-- use poll id to generate stats for that individual poll -->
-{{#poll}}
-    {{id}}
-    <a href="poll/?{{id}}">{{name}}</a>
-{{/poll}}
+
+<ol>
+    {{#polls}}
+    <li>
+
+        <form action="/get-poll" method="get">
+            <button type="submit" value="{{id}}" name="id">{{pollName}}</button>
+        </form>
+
+    </li>
+    {{/polls}}
+</ol>
 
 <form action="/take-poll" method="get">
     <button type="submit">Take A Poll</button>
@@ -20,14 +28,6 @@
 
 <form action="/create-poll" method="get">
     <button type="submit">Create A Poll</button>
-</form>
-
-<form action="/get-polls" method="get">
-    <button type="submit">See Your Polls</button>
-</form>
-
-<form action="/profile" method="get">
-    <button type="submit">Edit Profile</button>
 </form>
 
 <form action="/" method="get">

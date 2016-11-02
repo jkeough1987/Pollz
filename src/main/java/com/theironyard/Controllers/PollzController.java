@@ -84,7 +84,9 @@ public class PollzController {
     }
 
     @RequestMapping(path = "/get-polls", method = RequestMethod.GET)
-    public String getPolls(HttpSession session, User user, Model model)throws Exception{
+    public String getPolls(HttpSession session, Model model)throws Exception{
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
         ArrayList<Poll> userPolls = polls.findByUser(user);
 
         if (userPolls.size() == 0){
@@ -93,6 +95,17 @@ public class PollzController {
 
         model.addAttribute("polls", userPolls);
         return("/userpolls");
+    }
+
+    @RequestMapping(path = "/get-poll", method = RequestMethod.GET)
+    public String getPolls(HttpSession session, Model model, Integer id)throws Exception{
+        Poll poll = polls.findOne(id);
+
+//        if (userPolls.size() == 0){
+//            return("redirect:/");
+//        }
+        model.addAttribute("poll", poll);
+        return("/poll");
     }
 
     @RequestMapping(path = "/create-poll", method = RequestMethod.GET)
