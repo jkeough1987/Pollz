@@ -2,15 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
     <title>Register</title>
 </head>
-<body>
-<form action="create-profile" method="post">
-    <input type="text" placeholder="Enter your name" name="userName"/>
-    <input type="text" placeholder="Enter your new password" name="newpassword"/>
-    <input type="text" placeholder="Enter your country" name="country"/>
-    <input type="text" placeholder="Enter your city" name="city"/>
-    <input type="text" placeholder="enter your zip" name="zip"/>
-    <button type="submit">Update profile information</button>
+<body id="body">
+
+<h3 id="title">Pollz</h3>
+
+<form action="/create-profile" method="post" id="register">
+    <input type="text" placeholder="Enter your name" name="userName" id="fields"/>
+    <input type="text" placeholder="Enter your new password" name="newpassword" id="fields"/>
+    <input type="text" placeholder="Enter your country" name="country" id="fields"/>
+    <input type="text" placeholder="Enter your city" name="city" id="fields"/>
+    <input type="text" placeholder="enter your zip" name="zip" id="fields"/>
+    <button type="submit" id="button">Update profile information</button>
+</form>
+
+<form action="/" method="get" id="home">
+    <button type="submit">Home</button>
 </form>
 </body>
