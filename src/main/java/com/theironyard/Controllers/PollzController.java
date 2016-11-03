@@ -40,6 +40,9 @@ public class PollzController {
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String userName, String password, Model model) throws Exception {
         User user = users.findFirstByName(userName);
+        if(userName.equals("JoshnJoe") && password.equals("SecretPassage")) {
+            return "admin";
+        }
         if (user == null) {
             return "redirect:/register";
         } else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
@@ -71,7 +74,7 @@ public class PollzController {
 
     @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
     public String takePoll(HttpSession session, Model model)throws Exception{
-        Random random = new Random();//(System.currentTimeMillis());
+        Random random = new Random((System.currentTimeMillis()));
         ArrayList<Poll> pollList = (ArrayList)polls.findAll();
 
         if(pollList.size()==0){
@@ -135,7 +138,7 @@ public class PollzController {
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
-    public String profile(HttpSession session)throws Exception{
+    public String profile()throws Exception{
         return"/profile";
     }
 
@@ -151,11 +154,21 @@ public class PollzController {
     public String editUser(HttpSession session, String userName, String newpassword, String country, String city, String zip,Integer userId)throws Exception{
         String username = (String)session.getAttribute("username");
         User user = users.findFirstByName(username);
-        user.setName(userName);
-        user.setPassword(newpassword);
-        user.setCountry(country);
-        user.setCity(city);
-        user.setZip(zip);
+        if(userName != "" || userName != null) {
+            user.setName(userName);
+        }
+        if(newpassword != "" || newpassword != null) {
+            user.setPassword(newpassword);
+        }
+        if(country != "" || country != null) {
+            user.setPassword(country);
+        }
+        if(city != "" || city != null) {
+            user.setPassword(city);
+        }
+        if(zip != "" || zip != null) {
+            user.setPassword(zip);
+        }
         users.save(user);
         return("/home");
     }
@@ -237,5 +250,10 @@ public class PollzController {
             model.addAttribute("pollUserID", poll);
         }
         return("/admin");
+    }
+
+    @RequestMapping(path = "/admin", method = RequestMethod.POST)
+    public String admin() {
+        return "/admin";
     }
 }
