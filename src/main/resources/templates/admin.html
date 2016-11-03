@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+    <!--
+
+    username and password need to be hardcoded (initially at least)
+
+    logout
+    view users
+    view polls
+
+    update users
+    update polls
+
+    remove users
+    remove polls
+
+    -->
+
+    <h3>Pollz Admin Page</h3>
+
+    <form action="/logout" method="post">
+        <button type="submit">LogOut</button>
+    </form>
+    <br/>
+
+    Registered users:
+    <table>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>password</th>
+            <th>country</th>
+            <th>city</th>
+            <th>zip</th>
+        </tr>
+        {{#user}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>{{password}}</td>
+            <td>{{country}}</td>
+            <td>{{city}}</td>
+            <td>{{zip}}</td>
+        </tr>
+        {{/user}}
+    </table>
+    <br/>
+
+    Find user by username:
+    <form action="/find-user-username" method="post">
+        <input type="text" placeholder="username" name="username"/>
+        <button type="submit">Submit</button>
+    </form>
+    <br/>
+
+    Update user information:
+    <!-- this is update profile route -->
+    <form action="/update-user-info" method="post">
+        <input type="text" placeholder="User ID" name="userid"/>
+        <input type="text" placeholder="Enter your country" name="country"/>
+        <input type="text" placeholder="Enter your city" name="city"/>
+        <input type="text" placeholder="enter your zip" name="zip"/>
+        <button type="submit" id="button">Update profile information</button>
+    </form>
+    <br/>
+
+    Delete user:
+    <form action="/delete-user" method="post">
+        <input type="text" placeholder="User ID" name="userid"/>
+        <button type="submit">Delete user</button>
+    </form>
+    <br/>
+
+    View all polls:
+    <form action="/view-all-polls" method="post">
+        <button type="submit">View all polls</button>
+    </form>
+    <br/>
+
+    <div>
+        <table>
+            <tr>
+                <th>poll id</th>
+                <th>poll name</th>
+                <th>poll topic</th>
+                <th>response A</th>
+                <th>response B</th>
+                <th>response D</th>
+                <th>response E</th>
+                <th>response F</th>
+            </tr>
+            {{#poll}}
+            <tr>
+                <td>{{pollid}}</td>
+                <td>{{pollname}}</td>
+                <td>{{polltopic}}</td>
+                <td>{{responseA}}</td>
+                <td>{{responseB}}</td>
+                {{#responseC}}<td>{{.}}</td>{{/responseC}}
+                {{#responseD}}<td>{{.}}</td>{{/responseD}}
+                {{#responseE}}<td>{{.}}</td>{{/responseE}}
+                {{#responseF}}<td>{{.}}</td>{{/responseF}}
+            </tr>
+            {{/poll}}
+        </table>
+        <!-- do something with pagination here -->
+        {{#next}}
+        <a href="/?offset={{.}}">next</a>
+        {{/next}}
+
+        {{#previous}}
+        <a href="/?offset={{.}}">previous</a>
+        {{/previous}}
+    </div>
+    <br/>
+
+    <!-- need to do something here to only display the correct poll
+         maybe create a new mustache category? -->
+    Find poll by username:
+    <form action="/find-poll-by-username" method="post">
+        <input type="text" placeholder="User name" name="username"/>
+        <button type="submit">Submit</button>
+    </form>
+    <br/>
+    {{#pollUsername}}
+    {{.}}
+    {{/pollUsername}}
+    <br/>
+
+    Find poll by poll name
+    <form action="/find-poll-by-poll-name" method="post">
+        <input type="text" placeholder="Poll name" name="pollname"/>
+        <button type="submit">Submit</button>
+    </form>
+    <br/>
+
+    Remove all polls associated with a user ID. Need to also remove results at the same time
+    <form action="/remove-user-polls" method="post">
+        <input type="text" placeholder="User ID" name="userid"/>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
