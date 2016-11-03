@@ -64,7 +64,6 @@
         <tr>
           <th>User ID</th>
           <th>User name</th>
-          <th>Password</th>
           <th>Country</th>
           <th>City</th>
           <th>Zip</th>
@@ -73,16 +72,16 @@
     <tr>
         <td>{{id}}</td>
         <td>{{name}}</td>
-        <td>{{password}}</td>
         <td>{{country}}</td>
         <td>{{city}}</td>
         <td>{{zip}}</td>
-        <td> <form action="/admin" method="post">
+        <td>
+          <form action="/admin" method="post">
             <button type="submit">Clear</button>
-        </form></td>
+        </form>
+      </td>
         <!-- need to get the polls assoc with user: poll count? -->
     </tr>
-
     {{/selectedUser}}
   </table>
   <br/>
@@ -126,6 +125,7 @@
                 <th>poll topic</th>
                 <th>response A</th>
                 <th>response B</th>
+                <th>response C</th>
                 <th>response D</th>
                 <th>response E</th>
                 <th>response F</th>
@@ -159,8 +159,6 @@
     {{/noPolls}}
     <br/>
 
-    <!-- need to do something here to only display the correct poll
-         maybe create a new mustache category? -->
   <div>
     Find poll by user ID:
     <form action="/find-poll-by-username" method="post">
@@ -177,6 +175,7 @@
           <th>poll topic</th>
           <th>response A</th>
           <th>response B</th>
+          <th>response C</th>
           <th>response D</th>
           <th>response E</th>
           <th>response F</th>
@@ -200,5 +199,14 @@
     {{#notFound}}
     {{.}}
     {{/notFound}}
+
+  Remove all polls by a user:
+  <form action="/remove-users-polls" method = "post">
+    <input type="text" placeholder="User ID" name="useridString"/>
+    <button type="submit">Submit</button>
+  </form>
+  {{#pollsRemoved}}
+  {{.}}
+  {{/pollsRemoved}}
 </body>
 </html>

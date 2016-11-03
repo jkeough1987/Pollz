@@ -7,6 +7,7 @@ import com.theironyard.Entities.User;
 import com.theironyard.Services.UserRepo;
 import com.theironyard.Utilities.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -216,10 +217,11 @@ public class PollzController {
 
     //TODO: make it so that the user is deleted but their polls and results are saved
     @RequestMapping(path = "/delete-user", method = RequestMethod.POST)
-    public String deleteUserAdmin(Model model, String userid){
-        int id = Integer.parseInt(userid);
-        results.delete(id);
-        polls.delete(id);
+    public String deleteUserAdmin(Model model, String useridString){
+        int userid = Integer.parseInt(useridString);
+        int id = userid;
+        results.delete(userid);
+        polls.delete(userid);
         users.delete(id);
         model.addAttribute("deleted", "user deleted");
         return("/admin");
@@ -227,6 +229,7 @@ public class PollzController {
 
     //TODO: make this paginated. Could probably do the same for display all users for admin
     //TODO: and letting the user see the polls they've made
+    //TODO: sample code is located in peoplewebdb
     @RequestMapping(path = "/view-all-polls", method = RequestMethod.GET)
     public String viewAllPollsAdmin(Model model){
         ArrayList<Poll> pollsAll =(ArrayList) polls.findAll();
@@ -249,6 +252,15 @@ public class PollzController {
         else {
             model.addAttribute("pollUserID", poll);
         }
+        return("/admin");
+    }
+
+    @RequestMapping(path = "/remove-users-polls", method = RequestMethod.POST)
+    public String RemoveAllPollsByUser(Model model, String useridString){
+        int userid = Integer.parseInt(useridString);
+        results.delete(userid);
+        polls.delete(userid);
+        model.addAttribute("pollsRemoved", "All polls and results removed");
         return("/admin");
     }
 
