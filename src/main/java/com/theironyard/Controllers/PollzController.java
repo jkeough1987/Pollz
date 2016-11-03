@@ -169,6 +169,73 @@ public class PollzController {
         return("/editprofile");
     }
 
+    //TODO: Figure out a better way to handle this
+    @RequestMapping(path = "/find-user-username", method = RequestMethod.POST)
+    public String FindUserAdmin(Model model, String username){
+        User user = users.findFirstByName(username);
+        if(user == null){
+            user.setName("DOES NOT EXIST");
+            user.setPassword("N/A");
+            user.setCountry("N/A");
+            user.setCity("N/A");
+            user.setZip("N/A");
+        }
+        model.addAttribute("selectedUser", user);
+        return("/admin");
+    }
 
+    @RequestMapping(path = "/update-user-info", method = RequestMethod.POST)
+    public String updateUserAdmin(Model model, String userid, String country, String city, String zip){
+        User user = users.findById(Integer.parseInt(userid));
+        if(country != null) {
+            user.setCountry(country);
+        }
+        if(city != null) {
+            user.setCity(city);
+        }
+        if(zip != null) {
+            user.setZip(zip);
+        }
+        users.save(user);
+        model.addAttribute("message", "User information updated");
+        return("/admin");
+    }
 
+    //TODO: make it so that the user is deleted but their polls and results are saved
+    @RequestMapping(path = "/delete-user", method = RequestMethod.POST)
+    public String deleteUserAdmin(Model model, String userid){
+        int id = Integer.parseInt(userid);
+        results.delete(id);
+        polls.delete(id);
+        users.delete(id);
+        model.addAttribute("deleted", "user deleted");
+        return("/admin");
+    }
+
+    //TODO: make this paginated. Could probably do the same for display all users for admin
+    //TODO: and letting the user see the polls they've made
+    @RequestMapping(path = "/view-all-polls", method = RequestMethod.GET)
+    public String viewAllPollsAdmin(Model model){
+        ArrayList<Poll> pollsAll =(ArrayList) polls.findAll();
+
+        if(pollsAll.size() == 0){
+            model.addAttribute("noPolls", "There are no polls found");
+        }
+        else {
+            model.addAttribute("poll", pollsAll);
+        }
+        return("/admin");
+    }
+
+    @RequestMapping(path = "/find-poll-by-username", method = RequestMethod.POST)
+    public String findPollByUserAdmin(Model model, String userid){
+        Poll poll = polls.findByUserId(Integer.parseInt(userid));
+        if(poll == null){
+            model.addAttribute("notFound", "no polls were found");
+        }
+        else {
+            model.addAttribute("pollUserID", poll);
+        }
+        return("/admin");
+    }
 }
