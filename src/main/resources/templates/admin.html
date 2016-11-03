@@ -77,8 +77,12 @@
         <td>{{country}}</td>
         <td>{{city}}</td>
         <td>{{zip}}</td>
+        <td> <form action="/admin" method="post">
+            <button type="submit">Clear</button>
+        </form></td>
         <!-- need to get the polls assoc with user: poll count? -->
     </tr>
+
     {{/selectedUser}}
   </table>
   <br/>
@@ -196,4 +200,5 @@
     {{#notFound}}
     {{.}}
     {{/notFound}}
+</body>
 </html>
