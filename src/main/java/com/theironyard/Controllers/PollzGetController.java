@@ -114,8 +114,8 @@ public class PollzGetController {
              b = rb.size();
              c = rc.size();
              d = rd.size();
-             e = rd.size();
-             f = rd.size();
+             e = re.size();
+             f = rf.size();
         }
         model.addAttribute("a",a);
         model.addAttribute("b",b);
