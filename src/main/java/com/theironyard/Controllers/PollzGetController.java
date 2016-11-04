@@ -98,7 +98,7 @@ public class PollzGetController {
             if (r.getAnswer().equals(poll.getResponseB())) {
                 rb.add(r);
             }
-            if (r.getAnswer().equals(poll.getResponseA())) {
+            if (r.getAnswer().equals(poll.getResponseC())) {
                 rc.add(r);
             }
             if (r.getAnswer().equals(poll.getResponseA())) {
