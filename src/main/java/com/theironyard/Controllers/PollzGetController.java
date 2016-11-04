@@ -51,7 +51,7 @@ public class PollzGetController {
         ArrayList<Poll> pollList = (ArrayList) polls.findAll();
 
         if (pollList.size() == 0) {
-            return ("redirect:/");
+            return ("redirect:/create-poll");
         }
 
         Poll poll = pollList.get(random.nextInt(pollList.size()));
@@ -67,7 +67,7 @@ public class PollzGetController {
         ArrayList<Poll> userPolls = polls.findByUser(user);
 
         if (userPolls.size() == 0) {
-            return ("redirect:/");
+            return ("redirect:/create-poll");
         }
 
         model.addAttribute("polls", userPolls);
@@ -101,13 +101,13 @@ public class PollzGetController {
             if (r.getAnswer().equals(poll.getResponseC())) {
                 rc.add(r);
             }
-            if (r.getAnswer().equals(poll.getResponseA())) {
+            if (r.getAnswer().equals(poll.getResponseD())) {
                 rd.add(r);
             }
-            if (r.getAnswer().equals(poll.getResponseA())) {
+            if (r.getAnswer().equals(poll.getResponseE())) {
                 re.add(r);
             }
-            if (r.getAnswer().equals(poll.getResponseA())) {
+            if (r.getAnswer().equals(poll.getResponseF())) {
                 rf.add(r);
             }
              a = ra.size();
