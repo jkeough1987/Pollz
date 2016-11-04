@@ -7,6 +7,17 @@
 <body>
 
 {{#poll}}
+{{pollName}}
+{{pollTopic}}
+THE POLL RESULTS
+<hr>
+{{#responseA}}{{responseA}}: {{a}}{{/responseA}}
+{{#responseB}}{{responseB}}: {{b}}{{/responseB}}
+{{#responseC}}{{responseC}}: {{c}}{{/responseC}}
+{{#responseD}}{{responseD}}: {{d}}{{/responseD}}
+{{#responseE}}{{responseE}}: {{e}}{{/responseE}}
+{{#responseF}}{{responseF}}: {{f}}{{/responseF}}
+{{/poll}}
 <form action="/take-poll" method="get">
     <button type="submit">Take A Poll</button>
 </form>
@@ -22,11 +33,12 @@
 <form action="/profile" method="get">
     <button type="submit">Edit Profile</button>
 </form>
-{{/poll}}
+
 
 <form action="/" method="get">
     <button type="submit">Home</button>
 </form>
+
 
 </body>
 </html>

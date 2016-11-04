@@ -15,18 +15,20 @@ user needs to hit submit to submit answer
 
 -->
 
-{{#poll}}q
+{{#poll}}
 {{pollTopic}}
-<form action="/submit-answer" method="get">
+<form action="/submit-answer" method="post">
     <!-- <input type="text" placeholder="Answer" name="answer"/> -->
     <input type="hidden" value="{{pollTopic}}" name="topic"/>
-    <input type="hidden" value="{{user.id}}" name="userid"/>
+    {{#user}}
+    <input type="hidden" value="1" name="userid"/>
+    {{/user}}
     <input type="hidden" value="{{id}}" name="pollid"/>
     <select name="answer">
         <option selected disabled>Answer</option>
         <!-- problem with answer coming back null. Maybe the mustache tags aren't passing values?-->
-        {{#responseA}}<option value="{{.}}">{{responseA}}</option>{{/responseA}}
-        {{#responseB}}<option value="{{.}}">{{responseB}}</option>{{/responseB}}
+        {{#responseA}}<option value="{{responseA}}">{{responseA}}</option>{{/responseA}}
+        {{#responseB}}<option value="{{responseB}}">{{responseB}}</option>{{/responseB}}
         {{#responseC}}<option value="{{responseC}}">{{responseC}}</option>{{/responseC}}
         {{#responseD}}<option value="{{responseD}}">{{responseD}}</option>{{/responseD}}
         {{#responseE}}<option value="{{responseE}}">{{responseE}}</option>{{/responseE}}
@@ -35,6 +37,7 @@ user needs to hit submit to submit answer
     <button type="submit">Submit Poll</button>
 </form>
 {{/poll}}
+
 
 <form action="/take-poll" method="get">
     <button type="submit">Take Another Poll</button>
