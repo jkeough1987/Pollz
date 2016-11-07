@@ -136,8 +136,11 @@ public class PollzGetController {
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
-    public String profile() throws Exception {
-        return "/profile";
+    public String profile(HttpSession session, Model model) throws Exception {
+        String username = (String) session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        model.addAttribute("user", user);
+        return("/editprofile");
     }
 
 
@@ -148,6 +151,14 @@ public class PollzGetController {
         model.addAttribute("user", user);
         users.save(user);
         return ("/editprofile");
+    }
+
+    //TODO: Make this paginated
+    @RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
+    public String getAllUsers(Model model){
+        ArrayList<User> allUsers = (ArrayList) users.findAll();
+        model.addAttribute("allusers", allUsers);
+        return ("/admin");
     }
 
     //TODO: make this paginated. Could probably do the same for display all users for admin

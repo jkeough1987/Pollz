@@ -10,4 +10,5 @@ public interface ResultRepo extends CrudRepository<Result, Integer> {
     Result findFirstByPollId(Integer id);
 
     ArrayList<Result> findAllByPollId(Integer id);
+    Result findFirstByPollId(int id);
 }

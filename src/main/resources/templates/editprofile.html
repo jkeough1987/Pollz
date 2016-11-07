@@ -11,35 +11,37 @@
 
 Current profile information:
 {{#user}}
+User name: {{name}}
 Country: {{country}}
 City: {{city}}
 Zip: {{zip}}
 {{/user}}
 
 Edit your profile:
-<form action="/edit-profile" method="post" id="editProfile">
-    <input type="text" placeholder="Enter your country" name="country" id="fields"/>
-    <input type="text" placeholder="Enter your city" name="city" id="fields"/>
-    <input type="text" placeholder="enter your zip" name="zip" id="fields"/>
-    <button type="submit" id="button">Update profile information</button>
+<form action="/edit-profile" method="post">
+    <input type="text" placeholder="Enter your country" name="country"/>
+    <input type="text" placeholder="Enter your city" name="city"/>
+    <input type="text" placeholder="enter your zip" name="zip"/>
+    <button type="submit">Update profile information</button>
 </form>
 
 <form action="/show" method="post">
-    <button type="submit" id="button">Edit password</button>
+    <button type="submit">Edit password</button>
 </form>
 
 {{#show}}
 <form action="/edit-password" method="post">
     <input type="text" placeholder="current password" name="currentPassword"/>
     <input type="text" placeholder="please enter your new password" name="newPassword1"/>
-    <input type="text" placeholder="Enter your new password once again" name="newPassword2">
-    <button type="submit" id="button">Update password</button>
+    <input type="text" placeholder="Enter your new password once again" name="newPassword2"/>
+    <button type="submit">Update password</button>
 </form>
 
-<form action="/" method="get" id="home">
+{{/show}}
+
+<form action="/" method="get">
     <button type="submit">Home</button>
 </form>
-{{/show}}
 
 </body>
 </html>
