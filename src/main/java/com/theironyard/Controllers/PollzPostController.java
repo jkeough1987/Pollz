@@ -36,7 +36,7 @@ public class PollzPostController {
     public String login(HttpSession session, String userName, String password, Model model) throws Exception {
         User user = users.findFirstByName(userName);
         if (userName.equals("JoshnJoe") && password.equals("SecretPassage")) {
-            return "admin";
+            return "/admin";
         }
         if (user == null) {
             return "redirect:/register";
@@ -145,10 +145,22 @@ public class PollzPostController {
     //TODO: make it so that the user is deleted but their polls and results are saved
     @RequestMapping(path = "/delete-user", method = RequestMethod.POST)
     public String deleteUserAdmin(Model model, String useridString) {
-        int userid = Integer.parseInt(useridString);
-        int id = userid;
-        results.delete(userid);
-        polls.delete(userid);
+        int user_id = Integer.parseInt(useridString);
+        int id = user_id;
+        ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
+
+        for(Poll p : pollArrayList){
+            Result result = results.findFirstByPollId(p.getId());
+            if(result == null){
+                break;
+            }
+            results.delete(result.getId());
+        }
+
+        for(Poll p : pollArrayList) {
+            polls.delete(p.getId());
+        }
+
         users.delete(id);
         model.addAttribute("deleted", "user deleted");
         return ("/admin");
@@ -157,23 +169,38 @@ public class PollzPostController {
 
     @RequestMapping(path = "/find-poll-by-username", method = RequestMethod.POST)
     public String findPollByUserAdmin(Model model, String userid) {
-        Poll poll = polls.findByUserId(Integer.parseInt(userid));
-        if (poll == null) {
+        int user_id = Integer.parseInt(userid);
+         ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
+        if (pollArrayList.size() == 0) {
             model.addAttribute("notFound", "no polls were found");
         } else {
-            model.addAttribute("pollUserID", poll);
+            model.addAttribute("pollUserID", pollArrayList);
         }
         return ("/admin");
     }
 
+
     @RequestMapping(path = "/remove-users-polls", method = RequestMethod.POST)
     public String RemoveAllPollsByUser(Model model, String useridString) {
-        int userid = Integer.parseInt(useridString);
-        results.delete(userid);
-        polls.delete(userid);
+        int user_id = Integer.parseInt(useridString);
+        int id = user_id;
+        ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
+
+        for(Poll p : pollArrayList){
+            Result result = results.findFirstByPollId(p.getId());
+            if(result == null){
+                break;
+            }
+            results.delete(result.getId());
+        }
+
+        for(Poll p : pollArrayList) {
+            polls.delete(p.getId());
+        }
         model.addAttribute("pollsRemoved", "All polls and results removed");
         return ("/admin");
     }
+
 
     @RequestMapping(path = "/admin", method = RequestMethod.POST)
     public String admin() {

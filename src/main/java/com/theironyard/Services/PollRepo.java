@@ -12,5 +12,6 @@ import java.util.ArrayList;
  */
 public interface PollRepo extends CrudRepository<Poll, Integer> {
     ArrayList<Poll> findByUser(User user);
-    Poll findByUserId(int id);
+    ArrayList<Poll> findAllByUserId(int id);
+
 }
