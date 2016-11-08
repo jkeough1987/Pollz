@@ -29,7 +29,10 @@
     </form>
     <br/>
 
-    Registered users:
+    View all registered users:
+    <form action="/view-all-users" method="get">
+      <button type="submit">View all users</button>
+    </form>
     <table>
         <tr>
             <th>id</th>
@@ -47,9 +50,18 @@
             <td>{{country}}</td>
             <td>{{city}}</td>
             <td>{{zip}}</td>
+            <td>
+              <form action="/admin" method="post">
+                <button type="submit">Clear</button>
+            </form>
+          </td>
         </tr>
         {{/allusers}}
     </table>
+    <br/>
+    {{#areUsers}}
+    {{.}}
+    {{/areUsers}}
     <br/>
 
     Find user by username:
@@ -137,6 +149,11 @@
                 {{#responseD}}<td>{{.}}</td>{{/responseD}}
                 {{#responseE}}<td>{{.}}</td>{{/responseE}}
                 {{#responseF}}<td>{{.}}</td>{{/responseF}}
+                <td>
+                  <form action="/admin" method="post">
+                    <button type="submit">Clear</button>
+                </form>
+              </td>
             </tr>
             {{/poll}}
         </table>
@@ -187,6 +204,11 @@
           {{#responseD}}<td>{{.}}</td>{{/responseD}}
           {{#responseE}}<td>{{.}}</td>{{/responseE}}
           {{#responseF}}<td>{{.}}</td>{{/responseF}}
+          <td>
+            <form action="/admin" method="post">
+              <button type="submit">Clear</button>
+          </form>
+        </td>
       </tr>
       {{/pollUserID}}
     </table>

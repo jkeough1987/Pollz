@@ -157,6 +157,11 @@ public class PollzGetController {
     @RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
     public String getAllUsers(Model model){
         ArrayList<User> allUsers = (ArrayList) users.findAll();
+
+        if(allUsers.size()==0){
+            model.addAttribute("areUsers", "No users are currently registered");
+        }
+
         model.addAttribute("allusers", allUsers);
         return ("/admin");
     }
