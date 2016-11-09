@@ -7,6 +7,9 @@ import com.theironyard.Services.PollRepo;
 import com.theironyard.Services.ResultRepo;
 import com.theironyard.Services.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -154,21 +157,53 @@ public class PollzGetController {
     }
 
     //TODO: Make this paginated
-    @RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
+    /*@RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
     public String getAllUsers(Model model){
         ArrayList<User> allUsers = (ArrayList) users.findAll();
 
         if(allUsers.size()==0){
             model.addAttribute("areUsers", "No users are currently registered");
         }
+        model.addAttribute("allusers", allUsers);
+        return ("/admin");
+    }*/
 
+    @RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
+    public String getAllUsers(Model model, String offset){
+        int offsetNum = 1;
+
+        Integer previous = null;
+        Integer next = null;
+
+        /*if (offset != null) {
+            offsetNum = Integer.parseInt(offset);
+        }
+
+        if (offsetNum >= 0) {
+            previous = offsetNum - 0;
+        }
+
+        if(offsetNum < users.count() - 1){
+            if((users.count()-1) < 0){
+                next = 0;
+            }
+            else{
+                next = offsetNum + 1;
+            }
+        }*/
+
+        Page<User> allUsers = users.findAll(new PageRequest(offsetNum , offsetNum+1));
+
+        if(allUsers == null){
+            model.addAttribute("areUsers", "No users are currently registered");
+        }
+        //model.addAttribute("previous", previous);
+        model.addAttribute("next", next);
         model.addAttribute("allusers", allUsers);
         return ("/admin");
     }
 
     //TODO: make this paginated. Could probably do the same for display all users for admin
-    //TODO: and letting the user see the polls they've made
-    //TODO: sample code is located in peoplewebdb
     @RequestMapping(path = "/view-all-polls", method = RequestMethod.GET)
     public String viewAllPollsAdmin(Model model) {
         ArrayList<Poll> pollsAll = (ArrayList) polls.findAll();

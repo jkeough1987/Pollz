@@ -6,22 +6,6 @@
 </head>
 <body>
 
-    <!--
-
-    username and password need to be hardcoded (initially at least)
-
-    logout
-    view users
-    view polls
-
-    update users
-    update polls
-
-    remove users
-    remove polls
-
-    -->
-
     <h3>Pollz Admin Page</h3>
 
     <form action="/logout" method="post">
@@ -56,9 +40,23 @@
             </form>
           </td>
         </tr>
-        {{/allusers}}
     </table>
-    <br/>
+    {{/allusers}}
+
+
+
+    {{#next}}
+    <form action="/view-all-users" method="get">
+      <input type="hidden" value="{{.}}" name="offset"/>
+      <button type="submit">Next</button>
+    </form>
+    <!--<a href="/?offset={{.}}">next</a>-->
+    {{/next}}
+
+    {{#previous}}
+    <a href="/?offset={{.}}">previous</a>
+    {{/previous}}
+
     {{#areUsers}}
     {{.}}
     {{/areUsers}}
@@ -157,14 +155,7 @@
             </tr>
             {{/poll}}
         </table>
-        <!-- do something with pagination here -->
-        <!-- {{#next}}
-        <a href="/?offset={{.}}">next</a>
-        {{/next}}
 
-        {{#previous}}
-        <a href="/?offset={{.}}">previous</a>
-        {{/previous}} -->
     </div>
     <br/>
     {{#noPolls}}

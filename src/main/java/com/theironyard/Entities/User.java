@@ -1,5 +1,10 @@
 package com.theironyard.Entities;
+import org.hibernate.annotations.*;
+import org.springframework.data.jpa.repository.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
