@@ -52,6 +52,15 @@ public class PollzPostController {
 
     @RequestMapping(path = "/create-profile", method = RequestMethod.POST)
     public String registerUser(HttpSession session, String userName, String newpassword, String country, String city, String zip) throws Exception {
+        if(country == null) {
+            country = "";
+        }
+        if(city == null) {
+            city = "";
+        }
+        if(zip == null) {
+            zip = "";
+        }
         User user = new User(userName, PasswordStorage.createHash(newpassword), country, city, zip);
         users.save(user);
         return ("/home");

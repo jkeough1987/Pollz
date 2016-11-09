@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -33,6 +34,8 @@ public class PollzGetController {
     @Autowired
     ResultRepo results;
 
+    Integer counter = 0;
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(HttpSession session, Model model) {
         String username = (String) session.getAttribute("username");
@@ -48,7 +51,7 @@ public class PollzGetController {
 
     @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
     public String takePoll(HttpSession session, Model model) throws Exception {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
         Random random = new Random((System.currentTimeMillis()));
         ArrayList<Poll> pollList = (ArrayList) polls.findAll();
@@ -113,19 +116,19 @@ public class PollzGetController {
             if (r.getAnswer().equals(poll.getResponseF())) {
                 rf.add(r);
             }
-             a = ra.size();
-             b = rb.size();
-             c = rc.size();
-             d = rd.size();
-             e = re.size();
-             f = rf.size();
+            a = ra.size();
+            b = rb.size();
+            c = rc.size();
+            d = rd.size();
+            e = re.size();
+            f = rf.size();
         }
-        model.addAttribute("a",a);
-        model.addAttribute("b",b);
-        model.addAttribute("c",c);
-        model.addAttribute("d",d);
-        model.addAttribute("e",e);
-        model.addAttribute("f",f);
+        model.addAttribute("a", a);
+        model.addAttribute("b", b);
+        model.addAttribute("c", c);
+        model.addAttribute("d", d);
+        model.addAttribute("e", e);
+        model.addAttribute("f", f);
 
 
         model.addAttribute("poll", poll);
@@ -143,7 +146,7 @@ public class PollzGetController {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
         model.addAttribute("user", user);
-        return("/editprofile");
+        return ("/editprofile");
     }
 
 
@@ -169,37 +172,41 @@ public class PollzGetController {
     }*/
 
     @RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
-    public String getAllUsers(Model model, String offset){
-        int offsetNum = 1;
-
-        Integer previous = null;
-        Integer next = null;
-
-        /*if (offset != null) {
-            offsetNum = Integer.parseInt(offset);
+    public String getAllUsers(Model model, Integer offset) {
+        String previous = "Previous";
+        String next = "Next";
+        ;
+        if (offset == null) {
+            offset = 0;
         }
 
-        if (offsetNum >= 0) {
-            previous = offsetNum - 0;
-        }
 
-        if(offsetNum < users.count() - 1){
-            if((users.count()-1) < 0){
-                next = 0;
-            }
-            else{
-                next = offsetNum + 1;
-            }
-        }*/
+        counter = counter + offset;
 
-        Page<User> allUsers = users.findAll(new PageRequest(offsetNum , offsetNum+1));
-
-        if(allUsers == null){
+        ArrayList<User> allUsers = (ArrayList) users.findAll();
+        if (allUsers == null) {
             model.addAttribute("areUsers", "No users are currently registered");
         }
-        //model.addAttribute("previous", previous);
-        model.addAttribute("next", next);
-        model.addAttribute("allusers", allUsers);
+        ArrayList<User> pageList = new ArrayList();
+        for (User u : allUsers) {
+            if (pageList.size() <= 1) {
+                if (allUsers.indexOf(u) >= counter && allUsers.indexOf(u) < counter +1) {
+                    pageList.add(u);
+                }
+            }
+        }
+
+
+        if(counter < users.count() - 1){
+            model.addAttribute("next", next);
+
+        }
+
+        if(counter> 0) {
+            model.addAttribute("previous", previous);
+        }
+
+        model.addAttribute("allusers", pageList);
         return ("/admin");
     }
 

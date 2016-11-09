@@ -47,14 +47,17 @@
 
     {{#next}}
     <form action="/view-all-users" method="get">
-      <input type="hidden" value="{{.}}" name="offset"/>
+      <input type="hidden" value="1" name="offset"/>
       <button type="submit">Next</button>
     </form>
     <!--<a href="/?offset={{.}}">next</a>-->
     {{/next}}
 
     {{#previous}}
-    <a href="/?offset={{.}}">previous</a>
+    <form action="/view-all-users" method="get">
+        <input type="hidden" value="-1" name="offset"/>
+        <button type="submit">Previous</button>
+    </form>
     {{/previous}}
 
     {{#areUsers}}
