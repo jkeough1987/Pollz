@@ -6,22 +6,6 @@
 </head>
 <body>
 
-    <!--
-
-    username and password need to be hardcoded (initially at least)
-
-    logout
-    view users
-    view polls
-
-    update users
-    update polls
-
-    remove users
-    remove polls
-
-    -->
-
     <h3>Pollz Admin Page</h3>
 
     <form action="/logout" method="post">
@@ -29,7 +13,10 @@
     </form>
     <br/>
 
-    Registered users:
+    View all registered users:
+    <form action="/view-all-users" method="get">
+      <button type="submit">View all users</button>
+    </form>
     <table>
         <tr>
             <th>id</th>
@@ -47,9 +34,32 @@
             <td>{{country}}</td>
             <td>{{city}}</td>
             <td>{{zip}}</td>
+            <td>
+              <form action="/admin" method="post">
+                <button type="submit">Clear</button>
+            </form>
+          </td>
         </tr>
-        {{/allusers}}
     </table>
+    {{/allusers}}
+
+
+
+    {{#next}}
+    <form action="/view-all-users" method="get">
+      <input type="hidden" value="{{.}}" name="offset"/>
+      <button type="submit">Next</button>
+    </form>
+    <!--<a href="/?offset={{.}}">next</a>-->
+    {{/next}}
+
+    {{#previous}}
+    <a href="/?offset={{.}}">previous</a>
+    {{/previous}}
+
+    {{#areUsers}}
+    {{.}}
+    {{/areUsers}}
     <br/>
 
     Find user by username:
@@ -137,17 +147,15 @@
                 {{#responseD}}<td>{{.}}</td>{{/responseD}}
                 {{#responseE}}<td>{{.}}</td>{{/responseE}}
                 {{#responseF}}<td>{{.}}</td>{{/responseF}}
+                <td>
+                  <form action="/admin" method="post">
+                    <button type="submit">Clear</button>
+                </form>
+              </td>
             </tr>
             {{/poll}}
         </table>
-        <!-- do something with pagination here -->
-        <!-- {{#next}}
-        <a href="/?offset={{.}}">next</a>
-        {{/next}}
 
-        {{#previous}}
-        <a href="/?offset={{.}}">previous</a>
-        {{/previous}} -->
     </div>
     <br/>
     {{#noPolls}}
@@ -187,6 +195,11 @@
           {{#responseD}}<td>{{.}}</td>{{/responseD}}
           {{#responseE}}<td>{{.}}</td>{{/responseE}}
           {{#responseF}}<td>{{.}}</td>{{/responseF}}
+          <td>
+            <form action="/admin" method="post">
+              <button type="submit">Clear</button>
+          </form>
+        </td>
       </tr>
       {{/pollUserID}}
     </table>
