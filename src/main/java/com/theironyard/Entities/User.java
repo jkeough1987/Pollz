@@ -28,6 +28,9 @@ public class User {
     @Column(nullable = true)
     private String zip;
 
+    @Column(nullable = false)
+    private Boolean isAdmin;
+
     public User() {
     }
 
@@ -42,6 +45,15 @@ public class User {
         this.country = country;
         this.city = city;
         this.zip = zip;
+    }
+
+    public User(String name, String password, String country, String city, String zip, Boolean isAdmin) {
+        this.name = name;
+        this.password = password;
+        this.country = country;
+        this.city = city;
+        this.zip = zip;
+        this.isAdmin = isAdmin;
     }
 
     public int getId() {
@@ -90,5 +102,9 @@ public class User {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
     }
 }

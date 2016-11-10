@@ -35,20 +35,28 @@ public class PollzPostController {
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String userName, String password, Model model) throws Exception {
         User user = users.findFirstByName(userName);
+
         if (userName.equals("JoshnJoe") && password.equals("SecretPassage")) {
             return "/admin";
         }
+
         if (user == null) {
             return "redirect:/register";
         } else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
             return "redirect:/";
         }
+
+        if(user.getAdmin() && PasswordStorage.verifyPassword(password, user.getPassword())){
+            System.out.println("REACHED HERE ~~~~~~~~~~~~~~~");
+            model.addAttribute("admin", "true");
+            return "/admin";
+        }
+
         session.setAttribute("username", userName);
         model.addAttribute("user", user);
 
         return "redirect:/";
     }
-
 
     @RequestMapping(path = "/create-profile", method = RequestMethod.POST)
     public String registerUser(HttpSession session, String userName, String newpassword, String country, String city, String zip) throws Exception {
@@ -61,7 +69,10 @@ public class PollzPostController {
         if(zip == null) {
             zip = "";
         }
-        User user = new User(userName, PasswordStorage.createHash(newpassword), country, city, zip);
+
+        Boolean isAdmin = false;
+
+        User user = new User(userName, PasswordStorage.createHash(newpassword), country, city, zip, isAdmin);
         users.save(user);
         return ("/home");
     }

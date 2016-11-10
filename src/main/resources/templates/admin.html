@@ -5,7 +5,7 @@
     <title>Admin</title>
 </head>
 <body>
-
+{{#admin}}
     <h3>Pollz Admin Page</h3>
 
     <form action="/logout" method="post">
@@ -220,6 +220,6 @@
   {{#pollsRemoved}}
   {{.}}
   {{/pollsRemoved}}
-
+{{/admin}}
 </body>
 </html>
