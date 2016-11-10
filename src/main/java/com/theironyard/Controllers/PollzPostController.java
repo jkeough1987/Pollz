@@ -135,15 +135,9 @@ public class PollzPostController {
     @RequestMapping(path = "/update-user-info", method = RequestMethod.POST)
     public String updateUserAdmin(Model model, String userid, String country, String city, String zip) {
         User user = users.findById(Integer.parseInt(userid));
-        if (country != null) {
-            user.setCountry(country);
-        }
-        if (city != null) {
-            user.setCity(city);
-        }
-        if (zip != null) {
-            user.setZip(zip);
-        }
+        if (country != null) user.setCountry(country);
+        if (city != null) user.setCity(city);
+        if (zip != null) user.setZip(zip);
         users.save(user);
         model.addAttribute("message", "User information updated");
         return ("/admin");

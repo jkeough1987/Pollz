@@ -142,22 +142,25 @@ public class PollzGetController {
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
-    public String profile(HttpSession session, Model model) throws Exception {
+    public String profile(HttpSession session, Model model, String show) throws Exception {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
+        if (show != null){
+            model.addAttribute("show", show);
+        }
         model.addAttribute("user", user);
         return ("/editprofile");
     }
 
 
-    @RequestMapping(path = "/edit-profile", method = RequestMethod.GET)
-    public String getEditUser(HttpSession session, Model model) throws Exception {
-        String username = (String) session.getAttribute("username");
-        User user = users.findFirstByName(username);
-        model.addAttribute("user", user);
-        users.save(user);
-        return ("/editprofile");
-    }
+//    @RequestMapping(path = "/edit-profile", method = RequestMethod.GET)
+//    public String getEditUser(HttpSession session, Model model) throws Exception {
+//        String username = (String) session.getAttribute("username");
+//        User user = users.findFirstByName(username);
+//        model.addAttribute("user", user);
+//        users.save(user);
+//        return ("/editprofile");
+//    }
 
     //TODO: Make this paginated
     /*@RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
