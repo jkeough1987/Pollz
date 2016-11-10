@@ -96,21 +96,29 @@ public class PollzPostController {
 
 
     @RequestMapping(path = "/edit-profile", method = RequestMethod.POST)
-    public String editUser(HttpSession session, String userName, String newpassword, String country, String city, String zip, Integer userId) throws Exception {
+    public String editUser(HttpSession session, String currentPassword,String newPassword1, String newPassword2, String country, String city, String zip) throws Exception {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
-//        if (country != "" || country != null) {
-//            user.setPassword(country);
-//        }
-//        if (city != "" || city != null) {
-//            user.setPassword(city);
-//        }
-//        if (zip != "" || zip != null) {
-//            user.setPassword(zip);
-//        }
-        user.setZip(zip);
-        user.setCity(city);
-        user.setCountry(country);
+        if(currentPassword != null && newPassword1 != null && newPassword2 != null) {
+            if(PasswordStorage.verifyPassword(currentPassword, user.getPassword())&& newPassword1.equals(newPassword2)){
+                user.setPassword(PasswordStorage.createHash(newPassword1));
+            }
+            return "redirect:/profile";
+        }
+
+
+        if (!country.equals("")) {
+            user.setCountry(country);
+        }
+        if (!city.equals("")) {
+            user.setCity(city);
+        }
+        if (!zip.equals("")) {
+            user.setZip(zip);
+        }
+//        user.setZip(zip);
+//        user.setCity(city);
+//        user.setCountry(country);
         users.save(user);
 
         return ("redirect:/");
