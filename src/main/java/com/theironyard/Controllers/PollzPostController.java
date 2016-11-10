@@ -16,7 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.nio.file.Files;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 @Controller
@@ -43,11 +48,12 @@ public class PollzPostController {
         if (user == null) {
             return "redirect:/register";
         } else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
+            //write to log file unsuccessful login attempts for users
+            writeFile(user.getName());
             return "redirect:/";
         }
 
         if(user.getAdmin() && PasswordStorage.verifyPassword(password, user.getPassword())){
-            System.out.println("REACHED HERE ~~~~~~~~~~~~~~~");
             model.addAttribute("admin", "true");
             return "/admin";
         }
@@ -233,5 +239,12 @@ public class PollzPostController {
         Result result = new Result(topic, userid, pollid, answer);
         results.save(result);
         return "redirect:/take-poll";
+    }
+
+    public static void writeFile(String username){
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String time = df.format(cal.getTime());
+        Files.write("loginAttempts.txt", username, time);
     }
 }
