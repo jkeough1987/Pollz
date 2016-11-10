@@ -99,23 +99,21 @@ public class PollzPostController {
     public String editUser(HttpSession session, String userName, String newpassword, String country, String city, String zip, Integer userId) throws Exception {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
-        if (userName != "" || userName != null) {
-            user.setName(userName);
-        }
-        if (newpassword != "" || newpassword != null) {
-            user.setPassword(newpassword);
-        }
-        if (country != "" || country != null) {
-            user.setPassword(country);
-        }
-        if (city != "" || city != null) {
-            user.setPassword(city);
-        }
-        if (zip != "" || zip != null) {
-            user.setPassword(zip);
-        }
+//        if (country != "" || country != null) {
+//            user.setPassword(country);
+//        }
+//        if (city != "" || city != null) {
+//            user.setPassword(city);
+//        }
+//        if (zip != "" || zip != null) {
+//            user.setPassword(zip);
+//        }
+        user.setZip(zip);
+        user.setCity(city);
+        user.setCountry(country);
         users.save(user);
-        return ("/home");
+
+        return ("redirect:/");
     }
 
 
