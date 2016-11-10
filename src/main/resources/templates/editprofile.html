@@ -19,9 +19,11 @@ Zip: {{zip}}
 
 Edit your profile:
 <form action="/edit-profile" method="post">
+    {{^show}}
     <input type="text" placeholder="Enter your country" name="country"/>
     <input type="text" placeholder="Enter your city" name="city"/>
     <input type="text" placeholder="enter your zip" name="zip"/>
+    {{/show}}
     {{#show}}
     <input type="text" placeholder="current password" name="currentPassword"/>
     <input type="text" placeholder="please enter your new password" name="newPassword1"/>
