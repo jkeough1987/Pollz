@@ -22,22 +22,22 @@ Edit your profile:
     <input type="text" placeholder="Enter your country" name="country"/>
     <input type="text" placeholder="Enter your city" name="city"/>
     <input type="text" placeholder="enter your zip" name="zip"/>
-    <button type="submit">Update profile information</button>
-</form>
-
-<form action="/show" method="post">
-    <button type="submit">Edit password</button>
-</form>
-
-{{#show}}
-<form action="/edit-password" method="post">
+    {{#show}}
     <input type="text" placeholder="current password" name="currentPassword"/>
     <input type="text" placeholder="please enter your new password" name="newPassword1"/>
     <input type="text" placeholder="Enter your new password once again" name="newPassword2"/>
-    <button type="submit">Update password</button>
+    {{/show}}
+    <button type="submit">Update profile information</button>
 </form>
 
-{{/show}}
+<form action="/profile" method="get">
+    <input type="hidden" value="show" name="show"/>
+    <button type="submit">Edit password</button>
+</form>
+
+
+
+
 
 <form action="/" method="get">
     <button type="submit">Home</button>
