@@ -52,7 +52,7 @@ public class PollzPostController {
             return "redirect:/register";
         } else if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
             //write to log file unsuccessful login attempts for users
-            writeFile(user.getName());
+            writeFailedLoginAttempts(user.getName());
             return "redirect:/";
         }
 
@@ -241,7 +241,7 @@ public class PollzPostController {
         return "redirect:/take-poll";
     }
 
-    public static void writeFile(String username)throws IOException{
+    public static void writeFailedLoginAttempts(String username)throws IOException{
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         String time = df.format(cal.getTime());
