@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -241,10 +244,24 @@ public class PollzPostController {
         return "redirect:/take-poll";
     }
 
-    public static void writeFile(String username){
+    public static void writeFile(String username)throws IOException{
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         String time = df.format(cal.getTime());
-        Files.write("loginAttempts.txt", username, time);
+
+        String fileContent = (username + " " + time+"\r\n");
+
+        File check = new File("invalidLoginAttempts.txt");
+
+        if(!check.exists()){
+            File f = new File("invalidLoginAttempts.txt");
+            FileWriter fw = new FileWriter(f);
+            fw.write(fileContent);
+            fw.close();
+        }
+
+        FileWriter fw = new FileWriter(check, true);
+        fw.write(fileContent);
+        fw.close();
     }
 }
