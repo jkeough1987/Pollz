@@ -45,7 +45,7 @@ public class PollzPostController {
         User user = users.findFirstByName(userName);
 
         if (userName.equals("JoshnJoe") && password.equals("SecretPassage")) {
-            return "/admin";
+            return "redirect:/admin";
         }
 
         if (user == null) {
@@ -57,8 +57,8 @@ public class PollzPostController {
         }
 
         if(user.getAdmin() && PasswordStorage.verifyPassword(password, user.getPassword())){
-            model.addAttribute("admin", "true");
-            return "/admin";
+            session.setAttribute("username", userName);
+            return "redirect:/admin";
         }
 
         session.setAttribute("username", userName);
@@ -83,13 +83,13 @@ public class PollzPostController {
 
         User user = new User(userName, PasswordStorage.createHash(newpassword), country, city, zip, isAdmin);
         users.save(user);
-        return ("/home");
+        return ("redirect:/");
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession session) throws Exception {
         session.invalidate();
-        return ("/home");
+        return ("redirect:/");
     }
 
 
@@ -97,6 +97,7 @@ public class PollzPostController {
     public String createPoll(HttpSession session, String pollName, String topic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF) throws Exception {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
+        if (user == null) return "rediredct:/";
         if (responseC.equals("")) {
             responseC = null;
         }
@@ -111,13 +112,14 @@ public class PollzPostController {
         }
         Poll poll = new Poll(pollName, topic, responseA, responseB, responseC, responseD, responseE, responseF, user);
         polls.save(poll);
-        return ("/createpoll");
+        return ("redirect:/create-poll");
     }
 
 
     @RequestMapping(path = "/edit-profile", method = RequestMethod.POST)
     public String editUser(HttpSession session, String currentPassword,String newPassword1, String newPassword2, String country, String city, String zip) throws Exception {
         String username = (String) session.getAttribute("username");
+        if (username == null || username.isEmpty()) return "rediredct:/";
         User user = users.findFirstByName(username);
         if(currentPassword != null && newPassword1 != null && newPassword2 != null) {
             if(PasswordStorage.verifyPassword(currentPassword, user.getPassword())&& newPassword1.equals(newPassword2)){
@@ -157,7 +159,7 @@ public class PollzPostController {
             user.setZip("N/A");
         }
         model.addAttribute("selectedUser", user);
-        return ("/admin");
+        return ("redirect:/admin");
     }
 
     @RequestMapping(path = "/update-user-info", method = RequestMethod.POST)
@@ -168,7 +170,7 @@ public class PollzPostController {
         if (zip != null) user.setZip(zip);
         users.save(user);
         model.addAttribute("message", "User information updated");
-        return ("/admin");
+        return ("redirect:/admin");
     }
 
     //TODO: make it so that the user is deleted but their polls and results are saved
@@ -192,7 +194,7 @@ public class PollzPostController {
 
         users.delete(id);
         model.addAttribute("deleted", "user deleted");
-        return ("/admin");
+        return ("redirect:/admin");
     }
 
 
@@ -205,7 +207,7 @@ public class PollzPostController {
         } else {
             model.addAttribute("pollUserID", pollArrayList);
         }
-        return ("/admin");
+        return ("redirect:/admin");
     }
 
 
@@ -227,14 +229,9 @@ public class PollzPostController {
             polls.delete(p.getId());
         }
         model.addAttribute("pollsRemoved", "All polls and results removed");
-        return ("/admin");
+        return ("redirect:/admin");
     }
 
-
-    @RequestMapping(path = "/admin", method = RequestMethod.POST)
-    public String admin() {
-        return "/admin";
-    }
 
     //error here with not returning to poll page
     @RequestMapping(path = "/submit-answer", method = RequestMethod.POST)
