@@ -6,7 +6,9 @@ import com.theironyard.Entities.User;
 import com.theironyard.Services.PollRepo;
 import com.theironyard.Services.ResultRepo;
 import com.theironyard.Services.UserRepo;
+import com.theironyard.Utilities.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -175,7 +177,7 @@ public class PollzGetController {
     }*/
 
     @RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
-    public String getAllUsers(Model model, Integer offset) {
+    public String getAllUsers(Model model, Integer offset, HttpSession session) {
         String previous = "Previous";
         String next = "Next";
         ;
@@ -208,22 +210,49 @@ public class PollzGetController {
         if(counter> 0) {
             model.addAttribute("previous", previous);
         }
-
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        if(user == null) return "redirect:/";
+        if(user.getAdmin()){
+            model.addAttribute("admin", "true");
+        }
         model.addAttribute("allusers", pageList);
         return ("/admin");
     }
 
     //TODO: make this paginated. Could probably do the same for display all users for admin
     @RequestMapping(path = "/view-all-polls", method = RequestMethod.GET)
-    public String viewAllPollsAdmin(Model model) {
+    public String viewAllPollsAdmin(Model model, HttpSession session) {
         ArrayList<Poll> pollsAll = (ArrayList) polls.findAll();
 
         if (pollsAll.size() == 0) {
             model.addAttribute("noPolls", "There are no polls found");
         } else {
+
             model.addAttribute("poll", pollsAll);
         }
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        if(user == null) return "redirect:/";
+        if(user.getAdmin()){
+            model.addAttribute("admin", "true");
+        }
         return ("/admin");
+    }
+
+    @RequestMapping(path = "/admin", method = RequestMethod.GET)
+    public String admin(HttpSession session, Model model) {
+        String username = (String)session.getAttribute("username");
+        User user = users.findFirstByName(username);
+        if(user == null) return "redirect:/";
+        if(user.getAdmin()){
+            model.addAttribute("admin", "true");
+            return "/admin";
+        }
+
+
+        return "redirect:/";
+
     }
 
 }
