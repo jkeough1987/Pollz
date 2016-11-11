@@ -147,20 +147,10 @@ public class PollzPostController {
     }
 
 
-    //TODO: Figure out a better way to handle this
+    /*//TODO: Figure out a better way to handle this
     @RequestMapping(path = "/find-user-username", method = RequestMethod.POST)
     public String FindUserAdmin(Model model, String username) {
-        User user = users.findFirstByName(username);
-        if (user == null) {
-            user.setName("DOES NOT EXIST");
-            user.setPassword("N/A");
-            user.setCountry("N/A");
-            user.setCity("N/A");
-            user.setZip("N/A");
-        }
-        model.addAttribute("selectedUser", user);
-        return ("redirect:/admin");
-    }
+    }*/
 
     @RequestMapping(path = "/update-user-info", method = RequestMethod.POST)
     public String updateUserAdmin(Model model, String userid, String country, String city, String zip) {
@@ -180,25 +170,31 @@ public class PollzPostController {
         int id = user_id;
         ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
 
-        for(Poll p : pollArrayList){
-            Result result = results.findFirstByPollId(p.getId());
-            if(result == null){
-                break;
+        User user = users.findById(id);
+        if(user != null) {
+
+            for (Poll p : pollArrayList) {
+                Result result = results.findFirstByPollId(p.getId());
+                if (result == null) {
+                    break;
+                }
+                results.delete(result.getId());
             }
-            results.delete(result.getId());
-        }
 
-        for(Poll p : pollArrayList) {
-            polls.delete(p.getId());
-        }
+            for (Poll p : pollArrayList) {
+                polls.delete(p.getId());
+            }
 
-        users.delete(id);
-        model.addAttribute("deleted", "user deleted");
+            users.delete(id);
+            model.addAttribute("deleted", "user deleted");
+            return ("/admin");
+        }
+        model.addAttribute("deleted", "user does not exist");
         return ("redirect:/admin");
     }
 
 
-    @RequestMapping(path = "/find-poll-by-username", method = RequestMethod.POST)
+    /*@RequestMapping(path = "/find-poll-by-username", method = RequestMethod.POST)
     public String findPollByUserAdmin(Model model, String userid) {
         int user_id = Integer.parseInt(userid);
          ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
@@ -208,7 +204,7 @@ public class PollzPostController {
             model.addAttribute("pollUserID", pollArrayList);
         }
         return ("redirect:/admin");
-    }
+    }*/
 
 
     @RequestMapping(path = "/remove-users-polls", method = RequestMethod.POST)
