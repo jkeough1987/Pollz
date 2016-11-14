@@ -66,8 +66,8 @@
     <br/>
 
     Find user by username:
-    <form action="/find-user-username" method="post">
-        <input type="text" placeholder="username" name="username"/>
+    <form action="/admin" method="get">
+        <input type="text" placeholder="username" name="targetUserName"/>
         <button type="submit">Submit</button>
     </form>
     <br/>
@@ -119,6 +119,10 @@
         <button type="submit">Delete user</button>
     </form>
     <br/>
+    {{#deleted}}
+    {{.}}
+    {{/deleted}}
+    <br/>
 
     View all polls:
     <form action="/view-all-polls" method="get">
@@ -168,8 +172,8 @@
 
   <div>
     Find poll by user ID:
-    <form action="/find-poll-by-username" method="post">
-        <input type="text" placeholder="User ID" name="userid"/>
+    <form action="/admin" method="get">
+        <input type="number" placeholder="User ID" name="userid"/>
         <button type="submit">Submit</button>
     </form>
     <br/>

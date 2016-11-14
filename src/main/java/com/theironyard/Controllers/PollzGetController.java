@@ -241,18 +241,30 @@ public class PollzGetController {
     }
 
     @RequestMapping(path = "/admin", method = RequestMethod.GET)
-    public String admin(HttpSession session, Model model) {
+    public String admin(HttpSession session, Model model, String targetUserName, Integer userid) {
         String username = (String)session.getAttribute("username");
         User user = users.findFirstByName(username);
         if(user == null) return "redirect:/";
+
         if(user.getAdmin()){
             model.addAttribute("admin", "true");
-            return "/admin";
+            if(targetUserName != null){
+                User u = users.findFirstByName(targetUserName);
+                model.addAttribute("selectedUser", u);
+
+            }
+
+            if(userid != null){
+                ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(userid);
+                if (pollArrayList.size() == 0) {
+                    model.addAttribute("notFound", "no polls were found");
+                } else {
+                    model.addAttribute("pollUserID", pollArrayList);
+                }
+            }
+            return ("/admin");
         }
-
-
         return "redirect:/";
-
     }
 
 }
