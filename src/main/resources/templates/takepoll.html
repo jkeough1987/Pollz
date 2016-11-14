@@ -9,20 +9,10 @@
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 </head>
 <body>
-
-<!--
-
-each response is a selectable option
-user can only select one option
-when user selects an option, answer is not submitted automatically
-user needs to hit submit to submit answer
-
--->
-
 {{#poll}}
 {{pollTopic}}
 <form action="/submit-answer" method="post">
-    <!-- <input type="text" placeholder="Answer" name="answer"/> -->
+
     <input type="hidden" value="{{pollTopic}}" name="topic"/>
     {{#user}}
     <input type="hidden" value="1" name="userid"/>
@@ -30,7 +20,6 @@ user needs to hit submit to submit answer
     <input type="hidden" value="{{id}}" name="pollid"/>
     <select name="answer">
         <option selected disabled>Answer</option>
-        <!-- problem with answer coming back null. Maybe the mustache tags aren't passing values?-->
         {{#responseA}}<option value="{{responseA}}">{{responseA}}</option>{{/responseA}}
         {{#responseB}}<option value="{{responseB}}">{{responseB}}</option>{{/responseB}}
         {{#responseC}}<option value="{{responseC}}">{{responseC}}</option>{{/responseC}}
