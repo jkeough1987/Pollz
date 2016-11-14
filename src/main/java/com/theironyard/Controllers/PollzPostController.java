@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 @Controller
@@ -94,7 +95,7 @@ public class PollzPostController {
 
 
     @RequestMapping(path = "/create-poll", method = RequestMethod.POST)
-    public String createPoll(HttpSession session, String pollName, String topic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF) throws Exception {
+    public String createPoll(HttpSession session, String pollName, String topic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF, int userTimeToLive) throws Exception {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
         if (user == null) return "rediredct:/";
@@ -110,7 +111,12 @@ public class PollzPostController {
         if (responseF.equals("")) {
             responseF = null;
         }
-        Poll poll = new Poll(pollName, topic, responseA, responseB, responseC, responseD, responseE, responseF, user);
+
+        Date date = new Date();
+        Date timeToLive = addMinutesToDate(userTimeToLive, date);
+        boolean expired = false;
+
+        Poll poll = new Poll(pollName, topic, responseA, responseB, responseC, responseD, responseE, responseF, timeToLive, expired, user);
         polls.save(poll);
         return ("redirect:/create-poll");
     }
@@ -138,9 +144,7 @@ public class PollzPostController {
         if (!zip.equals("")) {
             user.setZip(zip);
         }
-//        user.setZip(zip);
-//        user.setCity(city);
-//        user.setCountry(country);
+
         users.save(user);
 
         return ("redirect:/");
@@ -218,5 +222,13 @@ public class PollzPostController {
         FileWriter fw = new FileWriter(check, true);
         fw.write(fileContent);
         fw.close();
+    }
+
+    public static Date addMinutesToDate(int minutes, Date beforeTime){
+        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
+
+        long curTimeInMs = beforeTime.getTime();
+        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
+        return afterAddingMins;
     }
 }
