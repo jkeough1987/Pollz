@@ -163,35 +163,12 @@ public class PollzPostController {
         return ("redirect:/admin");
     }
 
-    //TODO: make it so that the user is deleted but their polls and results are saved
-    @RequestMapping(path = "/delete-user", method = RequestMethod.POST)
-    public String deleteUserAdmin(Model model, String useridString) {
-        int user_id = Integer.parseInt(useridString);
-        int id = user_id;
-        ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
-
-        User user = users.findById(id);
-        if(user != null) {
-
-            for (Poll p : pollArrayList) {
-                Result result = results.findFirstByPollId(p.getId());
-                if (result == null) {
-                    break;
-                }
-                results.delete(result.getId());
-            }
-
-            for (Poll p : pollArrayList) {
-                polls.delete(p.getId());
-            }
-
-            users.delete(id);
-            model.addAttribute("deleted", "user deleted");
-            return ("/admin");
-        }
-        model.addAttribute("deleted", "user does not exist");
-        return ("redirect:/admin");
-    }
+//    //TODO: make it so that the user is deleted but their polls and results are saved
+//    @RequestMapping(path = "/delete-user", method = RequestMethod.POST)
+//    public String deleteUserAdmin(Model model, String useridString) {
+//
+//        return ("redirect:/admin");
+//    }
 
 
     /*@RequestMapping(path = "/find-poll-by-username", method = RequestMethod.POST)
@@ -207,26 +184,11 @@ public class PollzPostController {
     }*/
 
 
-    @RequestMapping(path = "/remove-users-polls", method = RequestMethod.POST)
-    public String RemoveAllPollsByUser(Model model, String useridString) {
-        int user_id = Integer.parseInt(useridString);
-        int id = user_id;
-        ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
-
-        for(Poll p : pollArrayList){
-            Result result = results.findFirstByPollId(p.getId());
-            if(result == null){
-                break;
-            }
-            results.delete(result.getId());
-        }
-
-        for(Poll p : pollArrayList) {
-            polls.delete(p.getId());
-        }
-        model.addAttribute("pollsRemoved", "All polls and results removed");
-        return ("redirect:/admin");
-    }
+//    @RequestMapping(path = "/remove-users-polls", method = RequestMethod.POST)
+//    public String RemoveAllPollsByUser(Model model, String useridString) {
+//
+//        return ("redirect:/admin");
+//    }
 
 
     //error here with not returning to poll page

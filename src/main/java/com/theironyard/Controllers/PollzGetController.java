@@ -241,7 +241,7 @@ public class PollzGetController {
     }
 
     @RequestMapping(path = "/admin", method = RequestMethod.GET)
-    public String admin(HttpSession session, Model model, String targetUserName, Integer userid) {
+    public String admin(HttpSession session, Model model, String targetUserName, Integer userid, String useridString, String deleteuserid) {
         String username = (String)session.getAttribute("username");
         User user = users.findFirstByName(username);
         if(user == null) return "redirect:/";
@@ -262,6 +262,54 @@ public class PollzGetController {
                     model.addAttribute("pollUserID", pollArrayList);
                 }
             }
+
+            if(useridString != null) {
+                int user_id = Integer.parseInt(useridString);
+                int id = user_id;
+                ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
+
+                for(Poll p : pollArrayList){
+                    Result result = results.findFirstByPollId(p.getId());
+                    if(result == null){
+                        break;
+                    }
+                    results.delete(result.getId());
+                }
+
+                for(Poll p : pollArrayList) {
+                    polls.delete(p.getId());
+                }
+                model.addAttribute("pollsRemoved", "All polls and results removed");
+            }
+
+            if(deleteuserid != null) {
+                int user_id = Integer.parseInt(deleteuserid);
+                int id = user_id;
+                ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
+
+                User user1 = users.findById(id);
+                if(user1 != null) {
+
+                    for (Poll p : pollArrayList) {
+                        Result result = results.findFirstByPollId(p.getId());
+                        if (result == null) {
+                            break;
+                        }
+                        results.delete(result.getId());
+                    }
+
+                    for (Poll p : pollArrayList) {
+                        polls.delete(p.getId());
+                    }
+
+                    users.delete(id);
+                    model.addAttribute("deleted", "user deleted");
+                    return ("/admin");
+                }
+                model.addAttribute("deleted", "user does not exist");
+            }
+
+
             return ("/admin");
         }
         return "redirect:/";
