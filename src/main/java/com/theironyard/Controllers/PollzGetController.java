@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -63,6 +66,23 @@ public class PollzGetController {
         }
 
         Poll poll = pollList.get(random.nextInt(pollList.size()));
+
+         Date currentDate = Date.valueOf(LocalDate.now());
+
+        if(poll.getTimeToLive().after(currentDate)){
+            poll.setExpired(true);
+        }
+
+        while (poll.isExpired() == true){
+            poll = pollList.get(random.nextInt(pollList.size()));
+        }
+
+        /*
+        left this in due to possible concurrency issues with checking the date time
+        if(poll.isExpired() == true){
+            poll = pollList.get(random.nextInt(pollList.size()));
+        }*/
+
         model.addAttribute("user", user);
         model.addAttribute("poll", poll);
         return ("/takepoll");

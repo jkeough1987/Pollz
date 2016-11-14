@@ -1,6 +1,7 @@
 package com.theironyard.Entities;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "polls")
@@ -34,13 +35,19 @@ public class Poll {
     @Column(nullable = true)
     private String responseF;
 
+    @Column(nullable = false)
+    private Date timeToLive;
+
+    @Column(nullable = false)
+    private boolean expired;
+
     @ManyToOne
     private User user;
 
     public Poll() {
     }
 
-    public Poll(String pollName, String pollTopic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF, User user) {
+    public Poll(String pollName, String pollTopic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF, Date timeToLive, boolean expired, User user) {
         this.pollName = pollName;
         this.pollTopic = pollTopic;
         this.responseA = responseA;
@@ -49,6 +56,8 @@ public class Poll {
         this.responseD = responseD;
         this.responseE = responseE;
         this.responseF = responseF;
+        this.timeToLive = timeToLive;
+        this.expired = expired;
         this.user = user;
     }
 
@@ -122,6 +131,22 @@ public class Poll {
 
     public void setResponseF(String responseF) {
         this.responseF = responseF;
+    }
+
+    public Date getTimeToLive() {
+        return timeToLive;
+    }
+
+    public void setTimeToLive(Date timeToLive) {
+        this.timeToLive = timeToLive;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 
     public User getUser() {

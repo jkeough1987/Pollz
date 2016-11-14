@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 @Controller
@@ -110,7 +111,15 @@ public class PollzPostController {
         if (responseF.equals("")) {
             responseF = null;
         }
-        Poll poll = new Poll(pollName, topic, responseA, responseB, responseC, responseD, responseE, responseF, user);
+
+        //used to test the timeToLive
+        int test = 1;
+
+        Date date = new Date();
+        Date timeToLive = addMinutesToDate(1, date);
+        boolean expired = false;
+
+        Poll poll = new Poll(pollName, topic, responseA, responseB, responseC, responseD, responseE, responseF, timeToLive, expired, user);
         polls.save(poll);
         return ("redirect:/create-poll");
     }
@@ -138,9 +147,7 @@ public class PollzPostController {
         if (!zip.equals("")) {
             user.setZip(zip);
         }
-//        user.setZip(zip);
-//        user.setCity(city);
-//        user.setCountry(country);
+
         users.save(user);
 
         return ("redirect:/");
@@ -256,5 +263,13 @@ public class PollzPostController {
         FileWriter fw = new FileWriter(check, true);
         fw.write(fileContent);
         fw.close();
+    }
+
+    public static Date addMinutesToDate(int minutes, Date beforeTime){
+        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
+
+        long curTimeInMs = beforeTime.getTime();
+        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
+        return afterAddingMins;
     }
 }
