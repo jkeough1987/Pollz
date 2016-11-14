@@ -95,7 +95,7 @@ public class PollzPostController {
 
 
     @RequestMapping(path = "/create-poll", method = RequestMethod.POST)
-    public String createPoll(HttpSession session, String pollName, String topic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF) throws Exception {
+    public String createPoll(HttpSession session, String pollName, String topic, String responseA, String responseB, String responseC, String responseD, String responseE, String responseF, int userTimeToLive) throws Exception {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
         if (user == null) return "rediredct:/";
@@ -112,11 +112,8 @@ public class PollzPostController {
             responseF = null;
         }
 
-        //used to test the timeToLive
-        int test = 1;
-
         Date date = new Date();
-        Date timeToLive = addMinutesToDate(1, date);
+        Date timeToLive = addMinutesToDate(userTimeToLive, date);
         boolean expired = false;
 
         Poll poll = new Poll(pollName, topic, responseA, responseB, responseC, responseD, responseE, responseF, timeToLive, expired, user);
