@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 </head>
 <body>
-{{#admin}}
+
+<div class="container-fluid">
+    {{#admin}}
     <h3>Pollz Admin Page</h3>
 
     <form action="/logout" method="post">
-        <button type="submit">LogOut</button>
+        <button type="submit" class="btn btn-danger">LogOut</button>
     </form>
     <br/>
 
     View all registered users:
     <form action="/view-all-users" method="get">
-      <button type="submit">View all users</button>
+        <button type="submit" class="btn btn-success">View all users</button>
     </form>
-    <table>
+    <table class="table table-hover table-bordered table-condensed">
+
         <tr>
             <th>id</th>
             <th>name</th>
@@ -26,7 +33,10 @@
             <th>city</th>
             <th>zip</th>
         </tr>
+
+
         {{#allusers}}
+
         <tr>
             <td>{{id}}</td>
             <td>{{name}}</td>
@@ -34,21 +44,18 @@
             <td>{{country}}</td>
             <td>{{city}}</td>
             <td>{{zip}}</td>
-            <td>
-              <form action="/admin" method="get">
-                <button type="submit">Clear</button>
-            </form>
-          </td>
         </tr>
+        <form action="/admin" method="get">
+            <button type="submit" class="btn btn-warning">Clear</button>
+        </form>
     </table>
     {{/allusers}}
 
 
-
     {{#next}}
     <form action="/view-all-users" method="get">
-      <input type="hidden" value="1" name="offset"/>
-      <button type="submit">Next</button>
+        <input type="hidden" value="1" name="offset"/>
+        <button type="submit" class="btn btn-info">Next</button>
     </form>
     <!--<a href="/?offset={{.}}">next</a>-->
     {{/next}}
@@ -56,7 +63,7 @@
     {{#previous}}
     <form action="/view-all-users" method="get">
         <input type="hidden" value="-1" name="offset"/>
-        <button type="submit">Previous</button>
+        <button type="submit" class="btn btn-info">Previous</button>
     </form>
     {{/previous}}
 
@@ -68,36 +75,33 @@
     Find user by username:
     <form action="/admin" method="get">
         <input type="text" placeholder="username" name="targetUserName"/>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
     </form>
     <br/>
 
     Selected user:
-    <table>
+    <table class="table table-hover table-bordered table-condensed">
         <tr>
-          <th>User ID</th>
-          <th>User name</th>
-          <th>Country</th>
-          <th>City</th>
-          <th>Zip</th>
+            <th>User ID</th>
+            <th>User name</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Zip</th>
         </tr>
-    {{#selectedUser}}
-    <tr>
-        <td>{{id}}</td>
-        <td>{{name}}</td>
-        <td>{{country}}</td>
-        <td>{{city}}</td>
-        <td>{{zip}}</td>
-        <td>
-          <form action="/admin" method="get">
-            <button type="submit">Clear</button>
+        {{#selectedUser}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>{{country}}</td>
+            <td>{{city}}</td>
+            <td>{{zip}}</td><!-- need to get the polls assoc with user: poll count? -->
+        </tr>
+        <form action="/admin" method="get">
+            <button type="submit" class="btn btn-warning">Clear</button>
         </form>
-      </td>
-        <!-- need to get the polls assoc with user: poll count? -->
-    </tr>
-    {{/selectedUser}}
-  </table>
-  <br/>
+        {{/selectedUser}}
+    </table>
+    <br/>
     Update user information:
     <!-- this is update profile route -->
     <form action="/update-user-info" method="post">
@@ -105,7 +109,7 @@
         <input type="text" placeholder="Enter your country" name="country"/>
         <input type="text" placeholder="Enter your city" name="city"/>
         <input type="text" placeholder="enter your zip" name="zip"/>
-        <button type="submit" id="button">Update profile information</button>
+        <button type="submit" class="btn btn-success">Update profile information</button>
     </form>
     <br/>
     {{#message}}
@@ -116,7 +120,7 @@
     Delete user:
     <form action="/admin" method="get">
         <input type="text" placeholder="User ID" name="deleteuserid"/>
-        <button type="submit">Delete user</button>
+        <button type="submit" class="btn btn-danger">Delete user</button>
     </form>
     <br/>
     {{#deleted}}
@@ -126,12 +130,12 @@
 
     View all polls:
     <form action="/view-all-polls" method="get">
-        <button type="submit">View all polls</button>
+        <button type="submit" class="btn btn-success">View all polls</button>
     </form>
     <br/>
 
     <div>
-        <table>
+        <table class="table table-hover table-bordered table-condensed">
             <tr>
                 <th>poll id</th>
                 <th>poll name</th>
@@ -150,15 +154,23 @@
                 <td>{{pollTopic}}</td>
                 <td>{{responseA}}</td>
                 <td>{{responseB}}</td>
-                {{#responseC}}<td>{{.}}</td>{{/responseC}}
-                {{#responseD}}<td>{{.}}</td>{{/responseD}}
-                {{#responseE}}<td>{{.}}</td>{{/responseE}}
-                {{#responseF}}<td>{{.}}</td>{{/responseF}}
+                {{#responseC}}
+                <td>{{.}}</td>
+                {{/responseC}}
+                {{#responseD}}
+                <td>{{.}}</td>
+                {{/responseD}}
+                {{#responseE}}
+                <td>{{.}}</td>
+                {{/responseE}}
+                {{#responseF}}
+                <td>{{.}}</td>
+                {{/responseF}}
                 <td>
-                  <form action="/admin" method="post">
-                    <button type="submit">Clear</button>
-                </form>
-              </td>
+                    <form action="/admin" method="get">
+                        <button type="submit" class="btn btn-warning">Clear</button>
+                    </form>
+                </td>
             </tr>
             {{/poll}}
         </table>
@@ -170,60 +182,69 @@
     {{/noPolls}}
     <br/>
 
-  <div>
-    Find poll by user ID:
-    <form action="/admin" method="get">
-        <input type="number" placeholder="User ID" name="userid"/>
-        <button type="submit">Submit</button>
-    </form>
-    <br/>
-  </div>
-  <div>
-    <table>
-      <tr>
-          <th>poll id</th>
-          <th>poll name</th>
-          <th>poll topic</th>
-          <th>response A</th>
-          <th>response B</th>
-          <th>response C</th>
-          <th>response D</th>
-          <th>response E</th>
-          <th>response F</th>
-      </tr>
-      {{#pollUserID}}
-      <tr>
-          <td>{{id}}</td>
-          <td>{{pollName}}</td>
-          <td>{{pollTopic}}</td>
-          <td>{{responseA}}</td>
-          <td>{{responseB}}</td>
-          {{#responseC}}<td>{{.}}</td>{{/responseC}}
-          {{#responseD}}<td>{{.}}</td>{{/responseD}}
-          {{#responseE}}<td>{{.}}</td>{{/responseE}}
-          {{#responseF}}<td>{{.}}</td>{{/responseF}}
-          <td>
-            <form action="/admin" method="get">
-              <button type="submit">Clear</button>
-          </form>
-        </td>
-      </tr>
-      {{/pollUserID}}
-    </table>
-  </div>
+    <div>
+        Find poll by user ID:
+        <form action="/admin" method="get">
+            <input type="number" placeholder="User ID" name="userid"/>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+        <br/>
+    </div>
+    <div>
+        <table class="table table-hover table-bordered table-condensed">
+            <tr>
+                <th>poll id</th>
+                <th>poll name</th>
+                <th>poll topic</th>
+                <th>response A</th>
+                <th>response B</th>
+                <th>response C</th>
+                <th>response D</th>
+                <th>response E</th>
+                <th>response F</th>
+            </tr>
+            {{#pollUserID}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{pollName}}</td>
+                <td>{{pollTopic}}</td>
+                <td>{{responseA}}</td>
+                <td>{{responseB}}</td>
+                {{#responseC}}
+                <td>{{.}}</td>
+                {{/responseC}}
+                {{#responseD}}
+                <td>{{.}}</td>
+                {{/responseD}}
+                {{#responseE}}
+                <td>{{.}}</td>
+                {{/responseE}}
+                {{#responseF}}
+                <td>{{.}}</td>
+                {{/responseF}}
+                <td>
+                    <form action="/admin" method="get">
+                        <button type="submit" class="btn btn-warning">Clear</button>
+                    </form>
+                </td>
+            </tr>
+            {{/pollUserID}}
+        </table>
+    </div>
     <br/>
     {{#notFound}}
     {{.}}
     {{/notFound}}
 
-  Remove all polls by a user:
-  <form action="/admin" method = "get">
-    <input type="text" placeholder="User ID" name="useridString"/>
-    <button type="submit">Submit</button>
-  </form>
-  {{#pollsRemoved}}
-  {{.}}
-  {{/pollsRemoved}}
-{{/admin}}
+    Remove all polls by a user:
+    <form action="/admin" method="get">
+        <input type="text" placeholder="User ID" name="useridString"/>
+        <button type="submit" class="btn btn-danger">Submit</button>
+    </form>
+    {{#pollsRemoved}}
+    {{.}}
+    {{/pollsRemoved}}
+    {{/admin}}
+</div>
 </body>
 </html>
