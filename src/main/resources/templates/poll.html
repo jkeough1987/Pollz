@@ -9,36 +9,39 @@
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 </head>
 <body>
+<div class="container-fluid">
+    <h1>Pollz</h1>
 
-{{#poll}}
-{{pollName}}
-{{pollTopic}}
-THE POLL RESULTS
-<hr>
-{{#responseA}}{{responseA}}: {{a}}{{/responseA}}
-{{#responseB}}{{responseB}}: {{b}}{{/responseB}}
-{{#responseC}}{{responseC}}: {{c}}{{/responseC}}
-{{#responseD}}{{responseD}}: {{d}}{{/responseD}}
-{{#responseE}}{{responseE}}: {{e}}{{/responseE}}
-{{#responseF}}{{responseF}}: {{f}}{{/responseF}}
-{{#expired}}{{expired}}: {{expired}}{{/expired}}
-{{/poll}}
-<form action="/take-poll" method="get">
-    <button type="submit">Take A Poll</button>
-</form>
+    {{#poll}}
+    <h3>{{pollName}}</h3>
+    <h4>{{pollTopic}}</h4>
+    <hr>
+    THE POLL RESULTS
 
-<form action="/get-polls" method="get">
-    <button type="submit">See Your Polls</button>
-</form>
+    {{#responseA}}{{responseA}}: {{a}}{{/responseA}}
+    {{#responseB}}{{responseB}}: {{b}}{{/responseB}}
+    {{#responseC}}{{responseC}}: {{c}}{{/responseC}}
+    {{#responseD}}{{responseD}}: {{d}}{{/responseD}}
+    {{#responseE}}{{responseE}}: {{e}}{{/responseE}}
+    {{#responseF}}{{responseF}}: {{f}}{{/responseF}}
+    {{#expired}}{{expired}}: {{expired}}{{/expired}}
+    {{/poll}}
+    <form action="/take-poll" method="get">
+        <button type="submit" class="btn btn-info">Take A Poll</button>
+    </form>
 
-<form action="/create-poll" method="get">
-    <button type="submit">Create A Poll</button>
-</form>
+    <form action="/get-polls" method="get">
+        <button type="submit" class="btn btn-info">See Your Polls</button>
+    </form>
 
-<form action="/" method="get">
-    <button type="submit">Home</button>
-</form>
+    <form action="/create-poll" method="get">
+        <button type="submit" class="btn btn-info">Create A Poll</button>
+    </form>
 
+    <form action="/" method="get">
+        <button type="submit" class="btn btn-info">Home</button>
+    </form>
 
+</div>
 </body>
 </html>

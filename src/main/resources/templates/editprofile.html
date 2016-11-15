@@ -9,44 +9,43 @@
     <title>Edit Profile</title>
 </head>
 <body>
+<div class="container-fluid">
+    <h1>Pollz</h1>
+    <h3>Profile</h3>
+    <hr>
 
-<h3>Pollz</h3>
+    Current profile information:
+    {{#user}}
+    User name: {{name}}
+    Country: {{country}}
+    City: {{city}}
+    Zip: {{zip}}
+    {{/user}}
 
-Current profile information:
-{{#user}}
-User name: {{name}}
-Country: {{country}}
-City: {{city}}
-Zip: {{zip}}
-{{/user}}
-
-Edit your profile:
-<form action="/edit-profile" method="post">
+    Edit your profile:
+    <form action="/edit-profile" method="post">
+        {{^show}}
+        <input type="text" placeholder="Enter your country" name="country"/>
+        <input type="text" placeholder="Enter your city" name="city"/>
+        <input type="text" placeholder="Enter your zip" name="zip"/>
+        {{/show}}
+        {{#show}}
+        <input type="text" placeholder="Current password" name="currentPassword"/>
+        <input type="text" placeholder="Enter new Password" name="newPassword1"/>
+        <input type="text" placeholder="Validate new Password" name="newPassword2"/>
+        {{/show}}
+        <button type="submit" class="btn btn-success">Update profile information</button>
+    </form>
     {{^show}}
-    <input type="text" placeholder="Enter your country" name="country"/>
-    <input type="text" placeholder="Enter your city" name="city"/>
-    <input type="text" placeholder="enter your zip" name="zip"/>
+    <form action="/profile" method="get">
+        <input type="hidden" value="show" name="show"/>
+        <button type="submit" class="btn btn-info">Edit password</button>
+    </form>
     {{/show}}
-    {{#show}}
-    <input type="text" placeholder="current password" name="currentPassword"/>
-    <input type="text" placeholder="please enter your new password" name="newPassword1"/>
-    <input type="text" placeholder="Enter your new password once again" name="newPassword2"/>
-    {{/show}}
-    <button type="submit">Update profile information</button>
-</form>
 
-<form action="/profile" method="get">
-    <input type="hidden" value="show" name="show"/>
-    <button type="submit">Edit password</button>
-</form>
-
-
-
-
-
-<form action="/" method="get">
-    <button type="submit">Home</button>
-</form>
-
+    <form action="/" method="get">
+        <button type="submit" class="btn btn-info">Home</button>
+    </form>
+</div>
 </body>
 </html>

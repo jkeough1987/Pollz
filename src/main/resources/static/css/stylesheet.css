@@ -2,6 +2,32 @@
     background-color: cornsilk;
 }
 
-.btn{
+.btn {
     background-color: #8a74a4;
+}
+
+body {
+    background-color: cornsilk;
+}
+
+button {
+    background-color: #8a74a4;
+}
+
+h1 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h4 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
