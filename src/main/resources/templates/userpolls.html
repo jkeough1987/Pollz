@@ -9,34 +9,37 @@
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 </head>
 <body>
+<div class="container-fluid">
+    <h1>Pollz</h1>
+    <h3>Your Pollz</h3>
+    <hr>
+    <!-- need to get the polls associated with the user here  -->
+    <!-- like purchases -->
+    <!-- use poll id to generate stats for that individual poll -->
 
-<!-- need to get the polls associated with the user here  -->
-<!-- like purchases -->
-<!-- use poll id to generate stats for that individual poll -->
+    <ol>
+        {{#polls}}
+        <li>
 
-<ol>
-    {{#polls}}
-    <li>
+            <form action="/get-poll" method="get">
+                <button type="submit" class="btn btn-success" value="{{id}}" name="id">{{pollName}}</button>
+            </form>
 
-        <form action="/get-poll" method="get">
-            <button type="submit" value="{{id}}" name="id">{{pollName}}</button>
-        </form>
+        </li>
+        {{/polls}}
+    </ol>
 
-    </li>
-    {{/polls}}
-</ol>
+    <form action="/take-poll" method="get">
+        <button type="submit" class="btn btn-info">Take A Poll</button>
+    </form>
 
-<form action="/take-poll" method="get">
-    <button type="submit">Take A Poll</button>
-</form>
+    <form action="/create-poll" method="get">
+        <button type="submit" class="btn btn-info">Create A Poll</button>
+    </form>
 
-<form action="/create-poll" method="get">
-    <button type="submit">Create A Poll</button>
-</form>
-
-<form action="/" method="get">
-    <button type="submit">Home</button>
-</form>
-
+    <form action="/" method="get">
+        <button type="submit" class="btn btn-info">Home</button>
+    </form>
+</div>
 </body>
 </html>

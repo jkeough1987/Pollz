@@ -65,17 +65,22 @@ public class PollzGetController {
             return ("redirect:/create-poll");
         }
 
-        Poll poll = pollList.get(random.nextInt(pollList.size()));
+
 
          Date currentDate = Date.valueOf(LocalDate.now());
+        Poll poll = pollList.get(random.nextInt(pollList.size()));;
+        boolean a = true;
 
-        if(poll.getTimeToLive().after(currentDate)){
-            poll.setExpired(true);
-        }
-
-        while (poll.isExpired() == true){
+        while(a) {
             poll = pollList.get(random.nextInt(pollList.size()));
+            if(poll.getTimeToLive().after(currentDate)){
+                a = false;
+            }
         }
+
+//        while (poll.isExpired() == true){
+//            poll = pollList.get(random.nextInt(pollList.size()));
+//        }
 
         /*
         left this in due to possible concurrency issues with checking the date time

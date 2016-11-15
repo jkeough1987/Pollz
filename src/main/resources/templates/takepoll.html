@@ -9,51 +9,65 @@
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 </head>
 <body>
+<div class="container-fluid">
+    <h1>Pollz</h1>
+    <!--
 
-<!--
+    each response is a selectable option
+    user can only select one option
+    when user selects an option, answer is not submitted automatically
+    user needs to hit submit to submit answer
 
-each response is a selectable option
-user can only select one option
-when user selects an option, answer is not submitted automatically
-user needs to hit submit to submit answer
+    -->
 
--->
+    <h3>{{#poll}}</h3>
+    <h4>{{pollTopic}}</h4>
+    <hr>
+    <form action="/submit-answer" method="post">
+        <!-- <input type="text" placeholder="Answer" name="answer"/> -->
+        <input type="hidden" value="{{pollTopic}}" name="topic"/>
+        {{#user}}
+        <input type="hidden" value="1" name="userid"/>
+        {{/user}}
+        <input type="hidden" value="{{id}}" name="pollid"/>
+        <select name="answer">
+            <option selected disabled>Answer</option>
+            <!-- problem with answer coming back null. Maybe the mustache tags aren't passing values?-->
+            {{#responseA}}
+            <option value="{{responseA}}">{{responseA}}</option>
+            {{/responseA}}
+            {{#responseB}}
+            <option value="{{responseB}}">{{responseB}}</option>
+            {{/responseB}}
+            {{#responseC}}
+            <option value="{{responseC}}">{{responseC}}</option>
+            {{/responseC}}
+            {{#responseD}}
+            <option value="{{responseD}}">{{responseD}}</option>
+            {{/responseD}}
+            {{#responseE}}
+            <option value="{{responseE}}">{{responseE}}</option>
+            {{/responseE}}
+            {{#responseF}}
+            <option value="{{responseF}}">{{responseF}}</option>
+            {{/responseF}}
+        </select>
+        <button type="submit" class="btn btn-success">Submit Poll</button>
+    </form>
+    {{/poll}}
 
-{{#poll}}
-{{pollTopic}}
-<form action="/submit-answer" method="post">
-    <!-- <input type="text" placeholder="Answer" name="answer"/> -->
-    <input type="hidden" value="{{pollTopic}}" name="topic"/>
-    {{#user}}
-    <input type="hidden" value="1" name="userid"/>
-    {{/user}}
-    <input type="hidden" value="{{id}}" name="pollid"/>
-    <select name="answer">
-        <option selected disabled>Answer</option>
-        <!-- problem with answer coming back null. Maybe the mustache tags aren't passing values?-->
-        {{#responseA}}<option value="{{responseA}}">{{responseA}}</option>{{/responseA}}
-        {{#responseB}}<option value="{{responseB}}">{{responseB}}</option>{{/responseB}}
-        {{#responseC}}<option value="{{responseC}}">{{responseC}}</option>{{/responseC}}
-        {{#responseD}}<option value="{{responseD}}">{{responseD}}</option>{{/responseD}}
-        {{#responseE}}<option value="{{responseE}}">{{responseE}}</option>{{/responseE}}
-        {{#responseF}}<option value="{{responseF}}">{{responseF}}</option>{{/responseF}}
-    </select>
-    <button type="submit">Submit Poll</button>
-</form>
-{{/poll}}
 
+    <form action="/take-poll" method="get">
+        <button type="submit" class="btn btn-info">Take Another Poll</button>
+    </form>
 
-<form action="/take-poll" method="get">
-    <button type="submit">Take Another Poll</button>
-</form>
+    <form action="/create-poll" method="get">
+        <button type="submit" class="btn btn-info">Create A Poll</button>
+    </form>
 
-<form action="/create-poll" method="get">
-    <button type="submit">Create A Poll</button>
-</form>
-
-<form action="/" method="get">
-    <button type="submit">Home</button>
-</form>
-
+    <form action="/" method="get">
+        <button type="submit" class="btn btn-info">Home</button>
+    </form>
+</div>
 </body>
 </html>
