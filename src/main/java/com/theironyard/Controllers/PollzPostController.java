@@ -198,6 +198,9 @@ public class PollzPostController {
     //error here with not returning to poll page
     @RequestMapping(path = "/submit-answer", method = RequestMethod.POST)
     public String results(String topic, Integer userid, Integer pollid, String answer) {
+        if(answer == null) {
+            return "redirect:/take-poll";
+        }
         Result result = new Result(topic, userid, pollid, answer);
         results.save(result);
         return "redirect:/take-poll";

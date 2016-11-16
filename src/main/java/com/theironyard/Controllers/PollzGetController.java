@@ -45,11 +45,11 @@ public class PollzGetController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(HttpSession session, Model model) {
-        LOGGER.info("Here we are in home() GET route.");
+//        LOGGER.info("Here we are in home() GET route.");
         String username = (String) session.getAttribute("username");
-        LOGGER.info("Here is username = " + username);
+//        LOGGER.info("Here is username = " + username);
         User user = users.findFirstByName(username);
-        LOGGER.info("Here is user = " + user);
+//        LOGGER.info("Here is user = " + user);
         model.addAttribute("user", user);
 //        LOGGER.info("After model");
         return "home";
@@ -72,27 +72,17 @@ public class PollzGetController {
         }
 
 
-
-         Date currentDate = Date.valueOf(LocalDate.now());
-        Poll poll = pollList.get(random.nextInt(pollList.size()));;
+        Date currentDate = Date.valueOf(LocalDate.now());
+        Poll poll = pollList.get(random.nextInt(pollList.size()));
+        ;
         boolean a = true;
 
-        while(a) {
+        while (a) {
             poll = pollList.get(random.nextInt(pollList.size()));
-            if(poll.getTimeToLive().after(currentDate)){
+            if (poll.getTimeToLive().after(currentDate)) {
                 a = false;
             }
         }
-
-//        while (poll.isExpired() == true){
-//            poll = pollList.get(random.nextInt(pollList.size()));
-//        }
-
-        /*
-        left this in due to possible concurrency issues with checking the date time
-        if(poll.isExpired() == true){
-            poll = pollList.get(random.nextInt(pollList.size()));
-        }*/
 
         model.addAttribute("user", user);
         model.addAttribute("poll", poll);
@@ -178,34 +168,12 @@ public class PollzGetController {
     public String profile(HttpSession session, Model model, String show) throws Exception {
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
-        if (show != null){
+        if (show != null) {
             model.addAttribute("show", show);
         }
         model.addAttribute("user", user);
         return ("editprofile");
     }
-
-
-//    @RequestMapping(path = "/edit-profile", method = RequestMethod.GET)
-//    public String getEditUser(HttpSession session, Model model) throws Exception {
-//        String username = (String) session.getAttribute("username");
-//        User user = users.findFirstByName(username);
-//        model.addAttribute("user", user);
-//        users.save(user);
-//        return ("/editprofile");
-//    }
-
-    //TODO: Make this paginated
-    /*@RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
-    public String getAllUsers(Model model){
-        ArrayList<User> allUsers = (ArrayList) users.findAll();
-
-        if(allUsers.size()==0){
-            model.addAttribute("areUsers", "No users are currently registered");
-        }
-        model.addAttribute("allusers", allUsers);
-        return ("/admin");
-    }*/
 
     @RequestMapping(path = "/view-all-users", method = RequestMethod.GET)
     public String getAllUsers(Model model, Integer offset, HttpSession session) {
@@ -226,25 +194,25 @@ public class PollzGetController {
         ArrayList<User> pageList = new ArrayList();
         for (User u : allUsers) {
             if (pageList.size() <= 1) {
-                if (allUsers.indexOf(u) >= counter && allUsers.indexOf(u) < counter +1) {
+                if (allUsers.indexOf(u) >= counter && allUsers.indexOf(u) < counter + 1) {
                     pageList.add(u);
                 }
             }
         }
 
 
-        if(counter < users.count() - 1){
+        if (counter < users.count() - 1) {
             model.addAttribute("next", next);
 
         }
 
-        if(counter> 0) {
+        if (counter > 0) {
             model.addAttribute("previous", previous);
         }
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
-        if(user == null) return "redirect:/";
-        if(user.getAdmin()){
+        if (user == null) return "redirect:/";
+        if (user.getAdmin()) {
             model.addAttribute("admin", "true");
         }
         model.addAttribute("allusers", pageList);
@@ -262,10 +230,10 @@ public class PollzGetController {
 
             model.addAttribute("poll", pollsAll);
         }
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
-        if(user == null) return "redirect:/";
-        if(user.getAdmin()){
+        if (user == null) return "redirect:/";
+        if (user.getAdmin()) {
             model.addAttribute("admin", "true");
         }
         return ("admin");
@@ -273,19 +241,19 @@ public class PollzGetController {
 
     @RequestMapping(path = "/admin", method = RequestMethod.GET)
     public String admin(HttpSession session, Model model, String targetUserName, Integer userid, String useridString, String deleteuserid) {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
-        if(user == null) return "redirect:/";
+        if (user == null) return "redirect:/";
 
-        if(user.getAdmin()){
+        if (user.getAdmin()) {
             model.addAttribute("admin", "true");
-            if(targetUserName != null){
+            if (targetUserName != null) {
                 User u = users.findFirstByName(targetUserName);
                 model.addAttribute("selectedUser", u);
 
             }
 
-            if(userid != null){
+            if (userid != null) {
                 ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(userid);
                 if (pollArrayList.size() == 0) {
                     model.addAttribute("notFound", "no polls were found");
@@ -294,32 +262,32 @@ public class PollzGetController {
                 }
             }
 
-            if(useridString != null) {
+            if (useridString != null) {
                 int user_id = Integer.parseInt(useridString);
                 int id = user_id;
                 ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
 
-                for(Poll p : pollArrayList){
+                for (Poll p : pollArrayList) {
                     Result result = results.findFirstByPollId(p.getId());
-                    if(result == null){
+                    if (result == null) {
                         break;
                     }
                     results.delete(result.getId());
                 }
 
-                for(Poll p : pollArrayList) {
+                for (Poll p : pollArrayList) {
                     polls.delete(p.getId());
                 }
                 model.addAttribute("pollsRemoved", "All polls and results removed");
             }
 
-            if(deleteuserid != null) {
+            if (deleteuserid != null) {
                 int user_id = Integer.parseInt(deleteuserid);
                 int id = user_id;
                 ArrayList<Poll> pollArrayList = (ArrayList) polls.findAllByUserId(user_id);
 
                 User user1 = users.findById(id);
-                if(user1 != null) {
+                if (user1 != null) {
 
                     for (Poll p : pollArrayList) {
                         Result result = results.findFirstByPollId(p.getId());
