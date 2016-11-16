@@ -21,8 +21,9 @@
     -->
 
     <h3>{{#poll}}</h3>
-    <h4>{{pollTopic}}</h4>
     <hr>
+    <h4>Poll Question: {{pollTopic}}</h4>
+
     <form action="/submit-answer" method="post">
         <!-- <input type="text" placeholder="Answer" name="answer"/> -->
         <input type="hidden" value="{{pollTopic}}" name="topic"/>
