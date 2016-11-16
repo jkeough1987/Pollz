@@ -171,7 +171,7 @@ public class PollzGetController {
 
     @RequestMapping(path = "/create-poll", method = RequestMethod.GET)
     public String getcreatePoll(HttpSession session) throws Exception {
-        return ("/createpoll");
+        return ("createpoll");
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
