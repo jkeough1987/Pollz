@@ -16,13 +16,13 @@
     <form action="/create-poll" method="post">
         <input type="text" placeholder="Name of Your poll" name="pollName"/>
         <input type="text" placeholder="Topic of Your poll" name="topic"/>
-        <input type="text" placeholder="Response A" name="responseA"/>
-        <input type="text" placeholder="Response B" name="responseB"/>
-        <input type="text" placeholder="Response C" name="responseC"/>
-        <input type="text" placeholder="Response D" name="responseD"/>
-        <input type="text" placeholder="Response E" name="responseE"/>
-        <input type="text" placeholder="Response F" name="responseF"/>
-        <input type="number" placeholder="Poll Expiration" name="userTimeToLive"/>
+        <input type="text" required placeholder="Enter an answer" name="responseA"/>
+        <input type="text" required placeholder="Enter an answer" name="responseB"/>
+        <input type="text" placeholder="Enter an answer" name="responseC"/>
+        <input type="text" placeholder="Enter an answer" name="responseD"/>
+        <input type="text" placeholder="Enter an answer" name="responseE"/>
+        <input type="text" placeholder="Enter an answer" name="responseF"/>
+        <input type="number" required placeholder="Poll expires in minutes" name="userTimeToLive"/>
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
 
