@@ -24,12 +24,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Created by joshuakeough on 11/3/16.
  */
 @Controller
 public class PollzGetController {
+    private static final Logger LOGGER = Logger.getLogger(PollzGetController.class.getName());
     @Autowired
     UserRepo users;
 
@@ -43,15 +45,19 @@ public class PollzGetController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(HttpSession session, Model model) {
+        LOGGER.info("Here we are in home() GET route.");
         String username = (String) session.getAttribute("username");
+        LOGGER.info("Here is username = " + username);
         User user = users.findFirstByName(username);
+        LOGGER.info("Here is user = " + user);
         model.addAttribute("user", user);
-        return "/home";
+//        LOGGER.info("After model");
+        return "home";
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.GET)
     public String goToRegister() throws Exception {
-        return ("/register");
+        return ("register");
     }
 
     @RequestMapping(path = "/take-poll", method = RequestMethod.GET)
@@ -90,7 +96,7 @@ public class PollzGetController {
 
         model.addAttribute("user", user);
         model.addAttribute("poll", poll);
-        return ("/takepoll");
+        return ("takepoll");
     }
 
     @RequestMapping(path = "/get-polls", method = RequestMethod.GET)
@@ -104,7 +110,7 @@ public class PollzGetController {
         }
 
         model.addAttribute("polls", userPolls);
-        return ("/userpolls");
+        return ("userpolls");
     }
 
     @RequestMapping(path = "/get-poll", method = RequestMethod.GET)
@@ -159,7 +165,7 @@ public class PollzGetController {
 
 
         model.addAttribute("poll", poll);
-        return ("/poll");
+        return ("poll");
     }
 
 
@@ -176,7 +182,7 @@ public class PollzGetController {
             model.addAttribute("show", show);
         }
         model.addAttribute("user", user);
-        return ("/editprofile");
+        return ("editprofile");
     }
 
 
@@ -242,7 +248,7 @@ public class PollzGetController {
             model.addAttribute("admin", "true");
         }
         model.addAttribute("allusers", pageList);
-        return ("/admin");
+        return ("admin");
     }
 
     //TODO: make this paginated. Could probably do the same for display all users for admin
@@ -262,7 +268,7 @@ public class PollzGetController {
         if(user.getAdmin()){
             model.addAttribute("admin", "true");
         }
-        return ("/admin");
+        return ("admin");
     }
 
     @RequestMapping(path = "/admin", method = RequestMethod.GET)
@@ -329,13 +335,13 @@ public class PollzGetController {
 
                     users.delete(id);
                     model.addAttribute("deleted", "user deleted");
-                    return ("/admin");
+                    return ("admin");
                 }
                 model.addAttribute("deleted", "user does not exist");
             }
 
 
-            return ("/admin");
+            return ("admin");
         }
         return "redirect:/";
     }
