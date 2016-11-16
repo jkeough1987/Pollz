@@ -27,7 +27,7 @@
         <!-- <input type="text" placeholder="Answer" name="answer"/> -->
         <input type="hidden" value="{{pollTopic}}" name="topic"/>
         {{#user}}
-        <input type="hidden" value="1" name="userid"/>
+        <input type="hidden" value="{{id}}" name="userid"/>
         {{/user}}
         <input type="hidden" value="{{id}}" name="pollid"/>
         <select name="answer">
